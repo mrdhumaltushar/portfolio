@@ -1,0 +1,14 @@
+# Testing previews & temporary screenshots
+preview_*.png
+verify_*.png
+
+# Source uncropped photos
+image.jpg.jpeg
+WhatsApp Image*
+user_cutout.png
+BMW
+
+# OS / Editor files
+.DS_Store
+Thumbs.db
+*.log

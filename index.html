@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tushar Dhumal | Power BI Developer &amp; Data Analyst</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' fill='%230284c7'>T</text></svg>">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Ambient Glow Background -->
+  <div class="ambient-glow"></div>
+  <div class="ambient-grid"></div>
+
+  <!-- Custom Cursor Glow -->
+  <div class="custom-cursor-glow" id="cursorGlow"></div>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="#hero" class="nav-logo">
+        <span class="logo-text">TUSHAR<span class="dot">.</span></span><span class="m-tricolor-line"><span></span><span></span><span></span></span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#hero" class="nav-link active">Home</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#experience" class="nav-link">Experience</a>
+        <a href="#certifications" class="nav-link">Certifications</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="Tushar_Dhumal_Resume.pdf" class="btn-talk" download="Tushar_Dhumal_Resume.pdf">
+          <span>Resume ⭳</span>
+        </a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#hero" class="mob-link">Home</a>
+    <a href="#about" class="mob-link">About</a>
+    <a href="#skills" class="mob-link">Skills</a>
+    <a href="#projects" class="mob-link">Projects</a>
+    <a href="#experience" class="mob-link">Experience</a>
+    <a href="#certifications" class="mob-link">Certifications</a>
+    <a href="#contact" class="mob-link">Contact</a>
+    <a href="Tushar_Dhumal_Resume.pdf" class="btn-primary mob-talk" download="Tushar_Dhumal_Resume.pdf">Download Resume</a>
+  </div>
+
+  <main>
+    <!-- ==================== HERO SECTION (REPLICATING REFERENCE DESIGN) ==================== -->
+    <section class="hero-section" id="hero">
+      
+      <!-- GIANT BACKGROUND TYPOGRAPHY: PORTFOLIO (RESPONSIVE SVG VECTOR WITH BMW M GRADIENT) -->
+      <div class="giant-portfolio-bg" aria-hidden="true">
+        <svg class="portfolio-svg" viewBox="0 0 1350 260" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <linearGradient id="portfolioGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <!-- BMW M Colors: Light Blue -> Dark Blue -> Highlighter Red -->
+              <stop offset="0%" stop-color="#1a85d6" />
+              <stop offset="30%" stop-color="#0e72bb" />
+              <stop offset="56%" stop-color="#003b79" />
+              <stop offset="82%" stop-color="#b81c12" />
+              <stop offset="100%" stop-color="#e22718" />
+            </linearGradient>
+            <filter id="portfolioGlow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="6" stdDeviation="15" flood-color="#0e72bb" flood-opacity="0.35" />
+            </filter>
+          </defs>
+          <text 
+            x="675" 
+            y="205" 
+            text-anchor="middle" 
+            font-family="'Bebas Neue', Impact, sans-serif" 
+            font-size="240" 
+            font-weight="900" 
+            letter-spacing="0.5px" 
+            fill="url(#portfolioGrad)" 
+            filter="url(#portfolioGlow)"
+          >PORTFOLIO</text>
+        </svg>
+      </div>
+
+      <!-- FLOATING DESIGN ACCENTS (Cursor Arrows / Paper Planes from Reference) -->
+      <div class="floating-accents" aria-hidden="true">
+        <!-- Floating Cursor 1 (Top Left above P) -->
+        <div class="floating-item float-item-1">
+          <svg class="cursor-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 3L18 10L11 12.5L8.5 19.5L4 3Z" fill="white" fill-opacity="0.9" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <!-- Floating Cursor 2 (Mid Left near O) -->
+        <div class="floating-item float-item-2">
+          <svg class="cursor-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 3L18 10L11 12.5L8.5 19.5L4 3Z" fill="white" fill-opacity="0.8" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <!-- Floating Cursor 3 (Mid Right near user's shoulder) -->
+        <div class="floating-item float-item-3">
+          <svg class="cursor-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 3L18 10L11 12.5L8.5 19.5L4 3Z" fill="white" fill-opacity="0.85" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <!-- Floating Cursor 4 (Right above FOLIO) -->
+        <div class="floating-item float-item-4">
+          <svg class="cursor-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 3L18 10L11 12.5L8.5 19.5L4 3Z" fill="white" fill-opacity="0.75" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- MAIN HERO CONTENT CONTAINER -->
+      <div class="hero-container">
+
+        <!-- LEFT COLUMN: Executive Value & Clean Typography -->
+        <div class="hero-left">
+          <div class="greeting-wrapper">
+            <span class="greeting-script">Hello, I'm</span>
+          </div>
+
+          <h1 class="hero-name" id="heroName">
+            TUSHAR DHUMAL<span class="name-dot">.</span>
+          </h1>
+
+          <div class="hero-role-wrapper">
+            <div class="hero-cert-tag">
+              <span class="m-tricolor-tiny"><span></span><span></span><span></span></span>
+              <span>MICROSOFT PL-300 CERTIFIED</span>
+            </div>
+            <div class="hero-role" id="heroRole">
+              POWER BI ARCHITECT &amp;<br>
+              <span class="highlight-role">DATA ANALYST</span>
+            </div>
+          </div>
+
+          <p class="hero-description" id="heroDesc">
+            Turning complex enterprise data into boardroom-ready intelligence. Proven delivery of 10+ end-to-end dashboards with 40% automated efficiency across Finance &amp; Sales.
+          </p>
+
+          <!-- Executive Tech Stack Chips -->
+          <div class="hero-tech-chips">
+            <span class="tech-chip"><span class="chip-dot"></span>Power BI</span>
+            <span class="tech-chip"><span class="chip-dot"></span>Microsoft Fabric</span>
+            <span class="tech-chip"><span class="chip-dot"></span>Advanced DAX</span>
+            <span class="tech-chip"><span class="chip-dot"></span>Python &amp; SQL</span>
+          </div>
+
+          <div class="hero-cta-group">
+            <a href="#projects" class="btn-primary hero-btn">
+              <span>Explore Dashboards</span>
+              <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+
+            <a href="#contact" class="btn-secondary hero-btn-alt">
+              <span>Contact Me</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- CENTER: USER CUTOUT PORTRAIT (Layered between text & foreground) -->
+        <div class="hero-center-portrait" id="portraitContainer">
+          <div class="portrait-glow"></div>
+          <img 
+            src="user_cutout_clean.png" 
+            alt="Tushar Dhumal Portfolio Portrait" 
+            class="user-portrait-img"
+            id="userPortrait"
+          />
+        </div>
+
+        <!-- RIGHT COLUMN: Executive Live BI Cockpit Widgets -->
+        <div class="hero-right">
+          
+          <!-- Widget 1: Real-Time Reporting Automation KPI Card -->
+          <div class="bi-cockpit-card" id="kpiCard1">
+            <div class="bi-card-header">
+              <div class="bi-card-badge">
+                <span class="trend-icon">▲</span>
+                <span class="trend-text">+40% Speed</span>
+              </div>
+              <span class="bi-card-label">REPORTING AUTOMATION</span>
+            </div>
+            <div class="bi-card-body">
+              <div class="bi-kpi-row">
+                <div class="bi-kpi-main">
+                  <span class="bi-kpi-val">40%</span>
+                  <span class="bi-kpi-sub">Time Saved</span>
+                </div>
+                <!-- Mini Live Animated Sparkline Chart -->
+                <div class="bi-sparkline">
+                  <svg viewBox="0 0 100 36" preserveAspectRatio="none">
+                    <defs>
+                      <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#0e72bb" stop-opacity="0.45"/>
+                        <stop offset="100%" stop-color="#0e72bb" stop-opacity="0"/>
+                      </linearGradient>
+                    </defs>
+                    <path d="M0,30 Q20,24 35,26 T70,12 T100,6 L100,36 L0,36 Z" fill="url(#sparkGrad)"/>
+                    <path d="M0,30 Q20,24 35,26 T70,12 T100,6" fill="none" stroke="#0e72bb" stroke-width="2.5"/>
+                    <circle cx="100" cy="6" r="3.5" fill="#e22718"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="bi-card-footer">
+                <span>Python • Power Automate • Fabric</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Widget 2: BMW Sales Advance & Enterprise Metric Card -->
+          <div class="bi-cockpit-card highlight-bmw" id="kpiCard2">
+            <div class="bi-card-header">
+              <div class="bi-live-indicator">
+                <span class="live-dot-pulse"></span>
+                <span>LIVE FRAMEWORK</span>
+              </div>
+              <span class="bmw-tag">BMW Sales Advance</span>
+            </div>
+            <div class="bi-card-body">
+              <div class="bi-kpi-row">
+                <div class="bi-kpi-main">
+                  <span class="bi-kpi-val highlight-m"><span class="counter" data-target="10">10</span>+</span>
+                  <span class="bi-kpi-sub">BI Solutions Delivered</span>
+                </div>
+                <div class="bi-kpi-badge">
+                  <span class="accuracy-tag">100% Accuracy</span>
+                </div>
+              </div>
+              <div class="bi-card-footer">
+                <a href="#projects" class="bi-preview-btn">
+                  <span>Explore Architecture</span>
+                  <span class="btn-arrow-sm">→</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Social Quick Links Bar -->
+          <div class="hero-socials">
+            <a href="https://linkedin.com/in/tushar-dhumal" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </a>
+            <a href="mailto:mr.dhumal.tushar@gmail.com" class="social-icon" aria-label="Email">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            </a>
+            <a href="tel:+919370998557" class="social-icon" aria-label="Phone">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Scroll Indicator -->
+      <div class="scroll-indicator">
+        <a href="#about" aria-label="Scroll Down">
+          <div class="mouse">
+            <div class="wheel"></div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ==================== ABOUT SECTION ==================== -->
+    <section class="section about-section" id="about">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">DISCOVER WHO I AM</span>
+          <h2 class="section-title">ABOUT <span class="text-accent">ME</span></h2>
+          <div class="section-line"></div>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-card-main">
+            <h3>Empowering Data-Driven Business Decisions</h3>
+            <p>
+              I am a <strong>Microsoft PL-300 Certified Power BI Developer and Data Analyst</strong> with a B.Com in Finance, specializing in translating complex corporate datasets into intuitive, high-impact executive dashboards.
+            </p>
+            <p>
+              With a solid track record of delivering <strong>10+ end-to-end BI projects</strong>, I have helped organizations reduce manual reporting overhead by up to <strong>40%</strong> through intelligent ETL automation and GenAI-augmented workflows. My core expertise covers advanced DAX, Python, Microsoft Fabric, SQL Azure, and Power Query, as well as developing custom Power BI visuals and seamless Power Automate integrations.
+            </p>
+
+            <div class="about-metrics">
+              <div class="metric-item">
+                <span class="metric-val">10+</span>
+                <span class="metric-title">End-to-End BI Projects</span>
+              </div>
+              <div class="metric-item">
+                <span class="metric-val">40%</span>
+                <span class="metric-title">Reporting Time Saved</span>
+              </div>
+              <div class="metric-item">
+                <span class="metric-val">100%</span>
+                <span class="metric-title">Data Accuracy &amp; Integrity</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-sidebar">
+            <div class="info-box">
+              <span class="info-label">Full Name</span>
+              <span class="info-value">Tushar Dhumal</span>
+            </div>
+            <div class="info-box">
+              <span class="info-label">Certification</span>
+              <span class="info-value text-accent">Microsoft PL-300 Certified</span>
+            </div>
+            <div class="info-box">
+              <span class="info-label">Education</span>
+              <span class="info-value">B.Com (Finance &amp; Accounting) • First Class</span>
+            </div>
+            <div class="info-box">
+              <span class="info-label">Location</span>
+              <span class="info-value">Nashik, Maharashtra, India</span>
+            </div>
+            <div class="info-box">
+              <span class="info-label">Availability</span>
+              <span class="info-value highlight-status"><span class="status-dot"></span> Available for Hire &amp; Projects</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SKILLS SECTION (2X2 EXECUTIVE BENTO GRID) ==================== -->
+    <section class="section skills-section" id="skills">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">TECHNICAL ARSENAL &amp; CAPABILITIES</span>
+          <h2 class="section-title">SKILLS &amp; <span class="text-accent">EXPERTISE</span></h2>
+          <div class="section-line"></div>
+        </div>
+
+        <div class="bento-skills-grid">
+          <!-- Bento Card 1: Power BI & Visual Analytics -->
+          <div class="bento-card bento-card-pbi">
+            <div class="bento-card-accent-line"></div>
+            <div class="bento-header">
+              <div class="bento-icon-box m-blue-glow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 20V10"></path>
+                  <path d="M12 20V4"></path>
+                  <path d="M6 20v-6"></path>
+                </svg>
+              </div>
+              <div class="bento-title-group">
+                <span class="bento-category-tag">FLAGSHIP DOMAIN</span>
+                <h3>Power BI &amp; Visual Analytics</h3>
+              </div>
+              <span class="bento-badge-metric cert-badge">
+                <span class="badge-dot blue"></span> PL-300 Certified
+              </span>
+            </div>
+            
+            <p class="bento-desc">
+              Designing C-suite dashboards and self-service reporting frameworks that transform complex relational datasets into clear, actionable executive intelligence.
+            </p>
+
+            <div class="bento-highlights-row">
+              <div class="bento-hl-item">
+                <span class="hl-bullet">📊</span>
+                <span class="hl-text"><strong>10+ Projects</strong> Delivered</span>
+              </div>
+              <div class="bento-hl-item">
+                <span class="hl-bullet">📐</span>
+                <span class="hl-text"><strong>Advanced DAX</strong> Modeling</span>
+              </div>
+              <div class="bento-hl-item">
+                <span class="hl-bullet">🎨</span>
+                <span class="hl-text"><strong>Custom Visual</strong> Dev</span>
+              </div>
+            </div>
+
+            <div class="bento-chips-group">
+              <span class="bento-chip primary"><span class="chip-m-dot"></span>Power BI (Expert)</span>
+              <span class="bento-chip"><span class="chip-m-dot"></span>Advanced DAX</span>
+              <span class="bento-chip"><span class="chip-m-dot"></span>Tableau</span>
+              <span class="bento-chip"><span class="chip-m-dot"></span>Advanced Excel</span>
+              <span class="bento-chip"><span class="chip-m-dot"></span>Dashboard Wireframing</span>
+              <span class="bento-chip"><span class="chip-m-dot"></span>Dynamic Arrays</span>
+            </div>
+          </div>
+
+          <!-- Bento Card 2: Cloud Data Platforms & ETL -->
+          <div class="bento-card bento-card-data">
+            <div class="bento-card-accent-line"></div>
+            <div class="bento-header">
+              <div class="bento-icon-box m-dark-glow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                  <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                  <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                </svg>
+              </div>
+              <div class="bento-title-group">
+                <span class="bento-category-tag">DATA PLATFORMS &amp; ETL</span>
+                <h3>Cloud Architecture &amp; Modeling</h3>
+              </div>
+              <span class="bento-badge-metric">
+                <span class="badge-dot green"></span> 100% Data Accuracy
+              </span>
+            </div>
+            
+            <p class="bento-desc">
+              Architecting scalable star schemas, relational models, automated cloud ETL pipelines, and high-performance analytical queries.
+            </p>
+
+            <div class="bento-highlights-row">
+              <div class="bento-hl-item">
+                <span class="hl-bullet">⭐</span>
+                <span class="hl-text"><strong>Star Schema</strong> Architecture</span>
+              </div>
+              <div class="bento-hl-item">
+                <span class="hl-bullet">⚡</span>
+                <span class="hl-text"><strong>Automated ETL</strong> Pipelines</span>
+              </div>
+              <div class="bento-hl-item">
+                <span class="hl-bullet">☁️</span>
+                <span class="hl-text"><strong>Cloud Warehouse</strong> Scale</span>
+              </div>
+            </div>
+
+            <div class="bento-chips-group">
+              <span class="bento-chip primary"><span class="chip-m-dot"></span>Microsoft Fabric</span>
+              <span class="bento-chip primary"><span class="chip-m-dot"></span>SQL Azure</span>
+              <span class="bento-chip"><span class="chip-m-dot"></span>Power Query ETL</span>
+              <span class="bento-chip"><span class="chip-m-dot"></span>M Language</span>
+              <span class="bento-chip"><span class="chip-m-dot"></span>Star Schema</span>
+              <span class="bento-chip"><span class="chip-m-dot"></span>Predictive Analytics</span>
+            </div>
+          </div>
+
+          <!-- Bento Card 3: Process Automation & Apps -->
+          <div class="bento-card bento-card-automation">
+            <div class="bento-card-accent-line"></div>
+            <div class="bento-header">
+              <div class="bento-icon-box m-red-glow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+              </div>
+              <div class="bento-title-group">
+                <span class="bento-category-tag">ENTERPRISE AUTOMATION</span>
+                <h3>Process Automation &amp; Apps</h3>
+              </div>
+              <span class="bento-badge-metric red-highlight">
+                <span class="badge-dot red"></span> 40% Time Saved
+              </span>
+            </div>
+            
+            <p class="bento-desc">
+              Eliminating manual reporting workflows through event-driven cloud triggers, custom enterprise Power Apps, and GenAI scripts.
+            </p>
+
+            <div class="bento-highlights-row">
+              <div class="bento-hl-item">
+                <span class="hl-bullet">🔄</span>
+                <span class="hl-text"><strong>Automated KPI</strong> Alerts</span>
+              </div>
+              <div class="bento-hl-item">
+                <span class="hl-bullet">📱</span>
+                <span class="hl-text"><strong>Custom Power Apps</strong></span>
+              </div>
+              <div class="bento-hl-item">
+                <span class="hl-bullet">🤖</span>
+                <span class="hl-text"><strong>GenAI Python</strong> Scripts</span>
+              </div>
+            </div>
+
+            <div class="bento-chips-group">
+              <span class="bento-chip primary"><span class="chip-m-dot"></span>Power Automate</span>
+              <span class="bento-chip primary"><span class="chip-m-dot"></span>Power Apps</span>
+              <span class="bento-chip"><span class="chip-m-dot"></span>Python Automation</span>
+              <span class="bento-chip"><span class="chip-m-dot"></span>Automated Alerts</span>
+              <span class="bento-chip"><span class="chip-m-dot"></span>REST APIs</span>
+              <span class="bento-chip"><span class="chip-m-dot"></span>GenAI Assisted Flows</span>
+            </div>
+          </div>
+
+          <!-- Bento Card 4: Business Analysis & Financial Strategy -->
+          <div class="bento-card bento-card-finance">
+            <div class="bento-card-accent-line"></div>
+            <div class="bento-header">
+              <div class="bento-icon-box m-blue-glow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M12 6v6l4 2"></path>
+                </svg>
+              </div>
+              <div class="bento-title-group">
+                <span class="bento-category-tag">DOMAIN &amp; STRATEGY</span>
+                <h3>Business Analysis &amp; Finance</h3>
+              </div>
+              <span class="bento-badge-metric">
+                <span class="badge-dot blue"></span> B.Com Finance (1st Class)
+              </span>
+            </div>
+            
+            <p class="bento-desc">
+              Bridging business objectives with technical analytics, creating BRD documentation, and delivering strategic sales &amp; financial insights.
+            </p>
+
+            <div class="bento-highlights-row">
+              <div class="bento-hl-item">
+                <span class="hl-bullet">📋</span>
+                <span class="hl-text"><strong>BRD &amp; User Stories</strong></span>
+              </div>
+              <div class="bento-hl-item">
+                <span class="hl-bullet">💼</span>
+                <span class="hl-text"><strong>C-Suite Alignment</strong></span>
+              </div>
+              <div class="bento-hl-item">
+                <span class="hl-bullet">🏎️</span>
+                <span class="hl-text"><strong>BMW Sales Intelligence</strong></span>
+              </div>
+            </div>
+
+            <div class="bento-chips-group">
+              <span class="bento-chip primary"><span class="chip-m-dot"></span>BRD Documentation</span>
+              <span class="bento-chip"><span class="chip-m-dot"></span>Requirement Gathering</span>
+              <span class="bento-chip"><span class="chip-m-dot"></span>Stakeholder Management</span>
+              <span class="bento-chip"><span class="chip-m-dot"></span>Financial Budgeting</span>
+              <span class="bento-chip"><span class="chip-m-dot"></span>Sales Analysis</span>
+              <span class="bento-chip"><span class="chip-m-dot"></span>KPI Governance</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== FEATURED PROJECTS SECTION ==================== -->
+    <section class="section projects-section" id="projects">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">PORTFOLIO SHOWCASE</span>
+          <h2 class="section-title">KEY <span class="text-accent">PROJECTS</span></h2>
+          <div class="section-line"></div>
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="project-filters">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="finance">Financial &amp; Sales</button>
+          <button class="filter-btn" data-filter="corporate">Corporate Dashboards</button>
+          <button class="filter-btn" data-filter="analytics">Data Science &amp; AI</button>
+        </div>
+
+        <div class="projects-grid">
+          <!-- Project 1 -->
+          <div class="project-card" data-category="finance">
+            <div class="project-banner banner-1">
+              <div class="project-badge">Datachamps</div>
+              <div class="project-overlay">
+                <span class="view-link">Explore Architecture →</span>
+              </div>
+            </div>
+            <div class="project-body">
+              <div class="project-tags">
+                <span>Power BI</span>
+                <span>SQL Azure</span>
+                <span>Fabric</span>
+                <span>DAX</span>
+              </div>
+              <h3 class="project-title">Client Financial &amp; Sales BI Suite</h3>
+              <p class="project-summary">Engineered an automated suite of enterprise accounting dashboards across Finance, Accounts Receivable (AR), Accounts Payable (AP), and Sales to centralize organizational financial intelligence.</p>
+              <div class="project-links">
+                <a href="#contact" class="proj-action primary">Discuss Solution</a>
+                <a href="Tushar_Dhumal_Resume.pdf" class="proj-action" download="Tushar_Dhumal_Resume.pdf">Resume Details</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2 -->
+          <div class="project-card" data-category="corporate">
+            <div class="project-banner banner-2">
+              <div class="project-badge bmw-m-badge">BMW M-Performance BI</div>
+              <div class="project-overlay">
+                <span class="view-link">Explore Architecture →</span>
+              </div>
+            </div>
+            <div class="project-body">
+              <div class="project-tags">
+                <span>Power BI</span>
+                <span>Advanced DAX</span>
+                <span>Data Modeling</span>
+              </div>
+              <h3 class="project-title">Sales &amp; BMW Sales Advance Platforms</h3>
+              <p class="project-summary">Designed executive-ready reporting frameworks, including an automated Sales Advance Dashboard and specialized BMW Sales Advance reporting platform tracking real-time KPI metrics.</p>
+              <div class="project-links">
+                <a href="#contact" class="proj-action primary">Discuss Solution</a>
+                <a href="Tushar_Dhumal_Resume.pdf" class="proj-action" download="Tushar_Dhumal_Resume.pdf">Resume Details</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 3 -->
+          <div class="project-card" data-category="analytics">
+            <div class="project-banner banner-3">
+              <div class="project-badge">Predictive Analytics</div>
+              <div class="project-overlay">
+                <span class="view-link">Explore Architecture →</span>
+              </div>
+            </div>
+            <div class="project-body">
+              <div class="project-tags">
+                <span>Python</span>
+                <span>EDA</span>
+                <span>AI Scripting</span>
+                <span>Pandas</span>
+              </div>
+              <h3 class="project-title">E-Commerce Customer Segmentation</h3>
+              <p class="project-summary">Performed comprehensive exploratory data analysis (EDA) and AI-assisted Python clustering to uncover customer behavioral patterns, cohort lifecycles, and repeat purchasing trends.</p>
+              <div class="project-links">
+                <a href="#contact" class="proj-action primary">Discuss Solution</a>
+                <a href="Tushar_Dhumal_Resume.pdf" class="proj-action" download="Tushar_Dhumal_Resume.pdf">Resume Details</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 4 -->
+          <div class="project-card" data-category="corporate">
+            <div class="project-banner banner-1">
+              <div class="project-badge">The Excel Bee</div>
+              <div class="project-overlay">
+                <span class="view-link">Explore Architecture →</span>
+              </div>
+            </div>
+            <div class="project-body">
+              <div class="project-tags">
+                <span>Power Query</span>
+                <span>Automation</span>
+                <span>Web Architecture</span>
+              </div>
+              <h3 class="project-title">The Excel Bee Platform &amp; Automation Hub</h3>
+              <p class="project-summary">Led technical content production, website design, and video masterclasses on data analytics, automated financial budgeting, and dashboard optimization workflows.</p>
+              <div class="project-links">
+                <a href="#contact" class="proj-action primary">Discuss Solution</a>
+                <a href="Tushar_Dhumal_Resume.pdf" class="proj-action" download="Tushar_Dhumal_Resume.pdf">Resume Details</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== EXPERIENCE SECTION (EXECUTIVE DUAL-CARD MATRIX) ==================== -->
+    <section class="section experience-section" id="experience">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">CAREER TRACK RECORD &amp; IMPACT</span>
+          <h2 class="section-title">PROFESSIONAL <span class="text-accent">EXPERIENCE</span></h2>
+          <div class="section-line"></div>
+        </div>
+
+        <div class="experience-matrix">
+          <!-- Company 1: Datachamps (Full-Time & Internship Progression) -->
+          <div class="exp-card exp-card-featured">
+            <div class="exp-accent-line m-tricolor"></div>
+            
+            <div class="exp-header">
+              <div class="exp-company-group">
+                <div class="exp-icon-box m-blue-glow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="exp-company-name">Datachamps Private Limited</h3>
+                  <span class="exp-location">Nashik, Maharashtra, India • Full-time &amp; Internship</span>
+                </div>
+              </div>
+              <span class="exp-status-badge live">
+                <span class="status-pulse-dot"></span> Present Role
+              </span>
+            </div>
+
+            <!-- Career Progression Stepper -->
+            <div class="exp-progression-track">
+              <!-- Milestone 1: Current Power BI Developer -->
+              <div class="progression-step current">
+                <div class="step-marker">
+                  <span class="marker-dot blue-dot"></span>
+                  <span class="marker-line"></span>
+                </div>
+                <div class="step-info">
+                  <div class="step-header">
+                    <h4 class="step-title">Power BI Developer</h4>
+                    <span class="step-date">Sep 2026 — Present</span>
+                  </div>
+                  <span class="step-promo-tag">🚀 Promoted from Intern</span>
+                </div>
+              </div>
+
+              <!-- Milestone 2: Internship -->
+              <div class="progression-step">
+                <div class="step-marker">
+                  <span class="marker-dot intern-dot"></span>
+                </div>
+                <div class="step-info">
+                  <div class="step-header">
+                    <h4 class="step-title">Power BI &amp; Data Analyst Intern</h4>
+                    <span class="step-date">Jan 2026 — Sep 2026</span>
+                  </div>
+                  <span class="step-subtext">9-Month Accelerated BI Internship</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Key Impact Highlights -->
+            <div class="exp-impact-grid">
+              <div class="impact-item">
+                <span class="impact-icon">⚡</span>
+                <p><strong>40% Time Saved:</strong> Reduced manual reporting turnaround using GenAI Python scripts &amp; Power Automate flows.</p>
+              </div>
+              <div class="impact-item">
+                <span class="impact-icon">📊</span>
+                <p><strong>C-Suite Dashboards:</strong> Engineered enterprise reporting suites with custom HTML/CSS/D3.js visual components.</p>
+              </div>
+              <div class="impact-item">
+                <span class="impact-icon">☁️</span>
+                <p><strong>Cloud ETL Pipelines:</strong> Automated scalable data models across SQL Azure, Microsoft Fabric &amp; Power Query.</p>
+              </div>
+            </div>
+
+            <!-- Tech Tags -->
+            <div class="exp-tech-chips">
+              <span class="tech-tag primary"><span class="chip-m-dot"></span>Power BI (Expert)</span>
+              <span class="tech-tag"><span class="chip-m-dot"></span>Microsoft Fabric</span>
+              <span class="tech-tag"><span class="chip-m-dot"></span>SQL Azure</span>
+              <span class="tech-tag"><span class="chip-m-dot"></span>Advanced DAX</span>
+              <span class="tech-tag"><span class="chip-m-dot"></span>Power Automate</span>
+              <span class="tech-tag"><span class="chip-m-dot"></span>Power Apps</span>
+              <span class="tech-tag"><span class="chip-m-dot"></span>BRD &amp; Wireframing</span>
+            </div>
+          </div>
+
+          <!-- Company 2: The Excel Bee (Data Analyst) -->
+          <div class="exp-card">
+            <div class="exp-accent-line m-blue"></div>
+            
+            <div class="exp-header">
+              <div class="exp-company-group">
+                <div class="exp-icon-box m-cyan-glow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="exp-company-name">The Excel Bee</h3>
+                  <span class="exp-location">Remote, India • Freelance &amp; Client Projects</span>
+                </div>
+              </div>
+              <span class="exp-status-badge completed">
+                3 Years Delivered
+              </span>
+            </div>
+
+            <!-- Role & Duration Banner -->
+            <div class="exp-role-banner">
+              <div>
+                <h4 class="banner-role-title">Data Analyst</h4>
+                <span class="banner-role-sub">Cross-Functional Client BI &amp; Analytics Consulting</span>
+              </div>
+              <span class="banner-date-badge">Jan 2023 — Jan 2026</span>
+            </div>
+
+            <!-- Key Impact Highlights -->
+            <div class="exp-impact-grid">
+              <div class="impact-item">
+                <span class="impact-icon">📈</span>
+                <p><strong>Operational KPI Suites:</strong> Built cross-functional Power BI dashboards enabling strategic data-driven decisions.</p>
+              </div>
+              <div class="impact-item">
+                <span class="impact-icon">🔄</span>
+                <p><strong>Automated Data Processing:</strong> Architected end-to-end SQL and Power Query ETL flows, slashing turnaround time.</p>
+              </div>
+              <div class="impact-item">
+                <span class="impact-icon">💡</span>
+                <p><strong>Financial &amp; Predictive Analytics:</strong> Translated business requirements into scalable financial budget frameworks.</p>
+              </div>
+            </div>
+
+            <!-- Tech Tags -->
+            <div class="exp-tech-chips">
+              <span class="tech-tag primary"><span class="chip-m-dot"></span>Data Analysis</span>
+              <span class="tech-tag"><span class="chip-m-dot"></span>Power BI Dashboards</span>
+              <span class="tech-tag"><span class="chip-m-dot"></span>SQL ETL</span>
+              <span class="tech-tag"><span class="chip-m-dot"></span>Power Query</span>
+              <span class="tech-tag"><span class="chip-m-dot"></span>Financial Modeling</span>
+              <span class="tech-tag"><span class="chip-m-dot"></span>GenAI Code Scripts</span>
+              <span class="tech-tag"><span class="chip-m-dot"></span>Advanced Excel</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== EDUCATION & CERTIFICATIONS ==================== -->
+    <section class="section certifications-section" id="certifications">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">CREDENTIALS &amp; ACADEMICS</span>
+          <h2 class="section-title">EDUCATION &amp; <span class="text-accent">CERTIFICATIONS</span></h2>
+          <div class="section-line"></div>
+        </div>
+
+        <div class="cert-grid">
+          <!-- Education Card -->
+          <div class="cert-card highlight-card">
+            <div class="cert-icon-lg">🎓</div>
+            <span class="cert-issuer">2020 — 2023</span>
+            <h3>Bachelor of Commerce (Finance &amp; Accounting)</h3>
+            <p class="cert-org">Savitribai Phule Pune University</p>
+            <span class="cert-honor">Graduated with First Class Honors</span>
+          </div>
+
+          <!-- Cert 1 -->
+          <div class="cert-card">
+            <div class="cert-icon-lg">🏅</div>
+            <span class="cert-issuer">Microsoft Certified</span>
+            <h3>PL-300: Power BI Data Analyst Associate</h3>
+            <p class="cert-org">Official Microsoft Certification</p>
+          </div>
+
+          <!-- Cert 2 -->
+          <div class="cert-card">
+            <div class="cert-icon-lg">⚡</div>
+            <span class="cert-issuer">TATA</span>
+            <h3>GenAI Powered Data Analytics &amp; Visualization</h3>
+            <p class="cert-org">Advanced Analytics Insights Simulation</p>
+          </div>
+
+          <!-- Cert 3 -->
+          <div class="cert-card">
+            <div class="cert-icon-lg">📈</div>
+            <span class="cert-issuer">Deloitte Australia</span>
+            <h3>Data Analytics Virtual Experience</h3>
+            <p class="cert-org">Consulting Analytics &amp; Reporting</p>
+          </div>
+
+          <!-- Cert 4 -->
+          <div class="cert-card">
+            <div class="cert-icon-lg">🏛️</div>
+            <span class="cert-issuer">JPMorgan Chase</span>
+            <h3>Quantitative Research Job Simulation</h3>
+            <p class="cert-org">Financial Modeling &amp; Analysis</p>
+          </div>
+
+          <!-- Cert 5 -->
+          <div class="cert-card">
+            <div class="cert-icon-lg">✈️</div>
+            <span class="cert-issuer">British Airways</span>
+            <h3>Data Science Job Simulation</h3>
+            <p class="cert-org">Predictive Modeling &amp; Customer Insights</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CONTACT SECTION ==================== -->
+    <section class="section contact-section" id="contact">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">READY TO TALK DATA?</span>
+          <h2 class="section-title">GET IN <span class="text-accent">TOUCH</span></h2>
+          <div class="section-line"></div>
+        </div>
+
+        <div class="contact-wrapper">
+          <div class="contact-info">
+            <h3>Let's build intelligent, automated BI solutions.</h3>
+            <p>
+              Whether you need executive Power BI dashboards, automated ETL pipelines in Fabric or Azure, or custom data analysis, I'm ready to help you unlock the full value of your data.
+            </p>
+
+            <div class="contact-methods">
+              <div class="contact-item">
+                <div class="c-icon">✉️</div>
+                <div>
+                  <span class="c-label">Direct Email</span>
+                  <a href="mailto:mr.dhumal.tushar@gmail.com" class="c-value">mr.dhumal.tushar@gmail.com</a>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="c-icon">📞</div>
+                <div>
+                  <span class="c-label">Direct Phone</span>
+                  <a href="tel:+919370998557" class="c-value">+91 9370998557</a>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="c-icon">💼</div>
+                <div>
+                  <span class="c-label">LinkedIn Profile</span>
+                  <a href="https://linkedin.com/in/tushar-dhumal" target="_blank" rel="noopener" class="c-value">linkedin.com/in/tushar-dhumal</a>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="c-icon">📍</div>
+                <div>
+                  <span class="c-label">Location</span>
+                  <span class="c-value">Nashik, Maharashtra, India (Open to Remote / Relocation)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Contact Form -->
+          <form class="contact-form" id="contactForm">
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" name="name" placeholder="John Doe" required>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Your Email</label>
+              <input type="email" id="email" name="email" placeholder="john@company.com" required>
+            </div>
+
+            <div class="form-group">
+              <label for="subject">Project Scope</label>
+              <input type="text" id="subject" name="subject" placeholder="Power BI Dashboard / Data Pipeline / Role" required>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Your Message</label>
+              <textarea id="message" name="message" rows="5" placeholder="Tell me about your dataset, business KPIs, or requirements..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary submit-btn">
+              <span>Send Message</span>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </button>
+            <div class="form-status" id="formStatus"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-left">
+        <a href="#hero" class="footer-logo">TUSHAR<span class="dot">.</span></a>
+        <p>© 2026 Tushar Dhumal. Microsoft PL-300 Certified Power BI Developer &amp; Data Analyst.</p>
+      </div>
+
+      <div class="footer-right">
+        <a href="#hero" class="back-to-top" aria-label="Back to top">
+          <span>Back to Top</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="19" x2="12" y2="5"></line>
+            <polyline points="5 12 12 5 19 12"></polyline>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script File -->
+  <script src="script.js"></script>
+</body>
+</html>
