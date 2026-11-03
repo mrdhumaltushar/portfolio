@@ -1403,10 +1403,11 @@ body {
   box-shadow: 0 0 18px var(--primary-blue-glow);
 }
 
+/* Horizontal Cards Stack */
 .projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  gap: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
 }
 
 .project-card {
@@ -1415,23 +1416,46 @@ body {
   border-radius: 20px;
   overflow: hidden;
   transition: var(--transition-smooth);
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 46% 54%;
+  align-items: stretch;
+  min-height: 400px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
 }
 
 .project-card:hover {
-  transform: translateY(-8px);
-  border-color: rgba(14, 165, 233, 0.35);
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+  transform: translateY(-6px);
+  border-color: rgba(14, 165, 233, 0.45);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65), 0 0 25px rgba(14, 114, 187, 0.2);
 }
 
 .project-banner {
-  height: 200px;
+  height: 100%;
+  min-height: 400px;
+  width: 100%;
   position: relative;
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
   justify-content: space-between;
-  padding: 1rem;
+  padding: 1.25rem;
+  border-radius: 20px 0 0 20px;
+  overflow: hidden;
+}
+
+/* Banner Themes */
+.banner-finance {
+  background: radial-gradient(circle at 25% 25%, #0e2d4e 0%, #061122 75%), linear-gradient(135deg, #0a1f33 0%, #030811 100%);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.banner-analytics {
+  background: radial-gradient(circle at 75% 30%, #192147 0%, #080c1d 75%), linear-gradient(135deg, #101736 0%, #03050f 100%);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.banner-excelbee {
+  background: radial-gradient(circle at 30% 70%, #1f1a10 0%, #080d17 75%), linear-gradient(135deg, #161a24 0%, #050811 100%);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .banner-1 {
@@ -1445,6 +1469,139 @@ body {
 .banner-3 {
   background: linear-gradient(135deg, #071c36 0%, #0d355c 100%);
 }
+
+/* Banner Teaser & Graphics */
+.banner-preview-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin: auto 0;
+  width: 100%;
+  z-index: 2;
+}
+
+.banner-kpi-bar {
+  display: flex;
+  gap: 0.65rem;
+  width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.banner-kpi-bar .bk-item {
+  background: rgba(4, 10, 22, 0.8);
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 6px 12px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.banner-kpi-bar .bk-item .b-lbl {
+  font-size: 0.62rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.banner-kpi-bar .bk-item .b-val {
+  font-size: 0.88rem;
+  color: #f8fafc;
+  font-weight: 800;
+}
+
+.banner-kpi-bar .bk-item .b-val.success {
+  color: #34d399;
+}
+
+.banner-chart-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  height: 85px;
+  padding: 0 1rem;
+}
+
+.banner-chart-bars span {
+  width: 18px;
+  background: linear-gradient(180deg, #38bdf8 0%, #0e72bb 100%);
+  border-radius: 4px 4px 0 0;
+  box-shadow: 0 0 12px rgba(14, 165, 233, 0.4);
+  animation: pulseBar 2.5s infinite alternate ease-in-out;
+}
+
+@keyframes pulseBar {
+  0% { filter: brightness(0.9); }
+  100% { filter: brightness(1.25); }
+}
+
+.banner-chart-dots {
+  position: relative;
+  width: 140px;
+  height: 85px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cluster-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(1px);
+}
+
+.cluster-blob.c1 {
+  width: 52px;
+  height: 52px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.85) 0%, rgba(14, 114, 187, 0) 70%);
+  top: 10px;
+  left: 15px;
+}
+
+.cluster-blob.c2 {
+  width: 46px;
+  height: 46px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.85) 0%, rgba(126, 34, 206, 0) 70%);
+  bottom: 10px;
+  right: 18px;
+}
+
+.cluster-blob.c3 {
+  width: 38px;
+  height: 38px;
+  background: radial-gradient(circle, rgba(52, 211, 153, 0.85) 0%, rgba(16, 185, 129, 0) 70%);
+  top: 25px;
+  right: 40px;
+}
+
+.banner-workflow-nodes {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(4, 9, 18, 0.82);
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.wf-node {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #38bdf8;
+  background: rgba(14, 165, 233, 0.12);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.wf-arrow {
+  color: #94a3b8;
+  font-weight: bold;
+}
+
 
 .project-badge {
   background: rgba(0, 0, 0, 0.7);
@@ -2280,48 +2437,106 @@ body {
     display: flex;
   }
 
+  /* Fixed Hero on Tablet & Mobile (Never clip greeting or name) */
+  .hero-section {
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding-top: 6.5rem !important;
+    padding-bottom: 3.5rem !important;
+    display: block !important;
+  }
+
   .hero-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding-top: 1rem;
-    padding-bottom: 3rem;
-    min-height: auto;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    padding: 0 !important;
+    min-height: auto !important;
+    gap: 1.5rem !important;
   }
 
   .hero-left {
-    padding-left: 0;
-    max-width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 2rem;
+    padding-left: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    margin-bottom: 0 !important;
   }
 
   .greeting-script {
-    transform: none;
+    transform: none !important;
+    margin-bottom: 0.25rem !important;
+    font-size: 1.75rem !important;
+  }
+
+  .hero-name {
+    font-size: clamp(3rem, 9vw, 4.2rem) !important;
+    line-height: 0.95 !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .hero-title {
+    font-size: clamp(1.15rem, 3.8vw, 1.5rem) !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .hero-bio {
+    font-size: 0.92rem !important;
+    max-width: 580px !important;
+    margin: 0 auto 1.25rem !important;
+  }
+
+  .tech-stack-pills {
+    justify-content: center !important;
+    margin-bottom: 1.5rem !important;
+    gap: 0.5rem !important;
   }
 
   .hero-cta-group {
-    justify-content: center;
+    justify-content: center !important;
+    gap: 0.75rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .giant-portfolio-bg {
+    top: 35% !important;
+    opacity: 0.15 !important;
+    transform: translate(-50%, -50%) scale(0.9) !important;
   }
 
   .hero-center-portrait {
-    position: relative;
-    left: auto;
-    bottom: auto;
-    transform: none;
-    height: 60vh;
-    max-height: 550px;
-    margin-top: 1rem;
-    margin-bottom: 2rem;
+    position: relative !important;
+    left: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    height: 48vh !important;
+    max-height: 440px !important;
+    width: auto !important;
+    margin: 0.5rem auto 1.5rem !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  .hero-portrait-img {
+    height: 100% !important;
+    width: auto !important;
+    max-height: 440px !important;
+    object-fit: contain !important;
   }
 
   .hero-right {
-    padding-right: 0;
-    align-items: center;
-    gap: 1.25rem;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 620px !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1rem !important;
+    margin-top: 0.5rem !important;
   }
 
   .tagline-texts,
@@ -2334,6 +2549,25 @@ body {
   .contact-wrapper {
     grid-template-columns: 1fr;
     gap: 2rem;
+  }
+
+  /* Tablet Horizontal Project Cards */
+  .project-card {
+    grid-template-columns: 44% 56%;
+    min-height: 360px;
+  }
+
+  .project-banner,
+  .project-carousel-banner {
+    min-height: 360px;
+  }
+
+  .project-body {
+    padding: 1.75rem 2rem;
+  }
+
+  .project-title {
+    font-size: 1.25rem;
   }
 }
 
@@ -2692,15 +2926,15 @@ body {
   box-shadow: 0 20px 50px rgba(14, 114, 187, 0.25);
 }
 
-/* Card Carousel Banner */
+/* Card Carousel Banner (Horizontal Layout) */
 .project-carousel-banner {
   position: relative;
   width: 100%;
-  height: 250px;
+  height: 100%;
+  min-height: 400px;
   background: #040914;
   overflow: hidden;
-  border-top-left-radius: 19px;
-  border-top-right-radius: 19px;
+  border-radius: 20px 0 0 20px;
   user-select: none;
 }
 
@@ -3306,5 +3540,162 @@ body {
   .bmw-stage-nav-arrow {
     width: 36px;
     height: 36px;
+  }
+}
+
+
+/* ==========================================================================
+   MOBILE & TABLET PRECISION RESPONSIVE ARCHITECTURE
+   ========================================================================== */
+@media (max-width: 768px) {
+  /* Mobile Single-Column Project Cards */
+  .project-card {
+    grid-template-columns: 1fr !important;
+    min-height: auto !important;
+  }
+
+  .project-banner,
+  .project-carousel-banner {
+    height: 240px !important;
+    min-height: 240px !important;
+    border-radius: 20px 20px 0 0 !important;
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  }
+
+  .project-body {
+    padding: 1.5rem 1.25rem !important;
+    border-radius: 0 0 20px 20px !important;
+  }
+
+  .project-title {
+    font-size: 1.22rem !important;
+  }
+
+  .project-summary {
+    font-size: 0.88rem !important;
+    line-height: 1.55 !important;
+    margin-bottom: 1.15rem !important;
+  }
+
+  .project-links {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 0.55rem !important;
+  }
+
+  .project-links .proj-action {
+    font-size: 0.78rem !important;
+    padding: 0.55rem 0.95rem !important;
+  }
+
+  /* Bento Grid Mobile */
+  .bento-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.15rem !important;
+  }
+
+  .bento-card {
+    padding: 1.4rem !important;
+  }
+
+  /* Experience Matrix Mobile */
+  .experience-matrix {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem !important;
+  }
+
+  .exp-card {
+    padding: 1.4rem !important;
+  }
+
+  /* Certifications Mobile */
+  .cert-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+
+  /* Contact Hub Mobile */
+  .contact-cards-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.9rem !important;
+  }
+
+  /* Hero Section Mobile */
+  .hero-section {
+    padding-top: 5.25rem !important;
+    padding-bottom: 2.5rem !important;
+  }
+
+  .hero-name {
+    font-size: clamp(2.8rem, 11vw, 3.8rem) !important;
+    line-height: 0.95 !important;
+  }
+
+  .hero-title {
+    font-size: clamp(1.1rem, 4.4vw, 1.4rem) !important;
+  }
+
+  .hero-bio {
+    font-size: 0.88rem !important;
+    line-height: 1.55 !important;
+  }
+
+  .hero-center-portrait {
+    height: 40vh !important;
+    max-height: 340px !important;
+    margin: 0.5rem auto 1.25rem !important;
+  }
+
+  .hero-portrait-img {
+    max-height: 340px !important;
+  }
+
+  .hero-right {
+    grid-template-columns: 1fr !important;
+    max-width: 360px !important;
+    gap: 0.85rem !important;
+  }
+
+  .section {
+    padding: 3.5rem 0 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-cta-group {
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: 300px !important;
+  }
+
+  .hero-cta-group .btn-primary,
+  .hero-cta-group .btn-secondary {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .project-links {
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+
+  .project-links .proj-action {
+    width: 100% !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  .hero-center-portrait {
+    height: 36vh !important;
+    max-height: 290px !important;
+  }
+
+  .hero-portrait-img {
+    max-height: 290px !important;
+  }
+
+  .bmw-project-metrics-grid {
+    grid-template-columns: 1fr !important;
   }
 }

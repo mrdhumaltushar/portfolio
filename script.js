@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
       projectCards.forEach(card => {
         const category = card.getAttribute('data-category');
         if (filter === 'all' || category === filter) {
-          card.style.display = 'flex';
+          card.style.display = '';
           card.style.opacity = '0';
           setTimeout(() => {
             card.style.transition = 'opacity 0.4s ease';
