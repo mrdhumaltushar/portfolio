@@ -24,7 +24,7 @@
 ├── style.css                   # BMW M Motorsport design tokens & styles
 ├── script.js                   # Interactive filters, live clock & animations
 ├── user_cutout_clean.png       # Optimized transparent executive portrait
-├── Tushar_Dhumal_Resume.pdf    # Downloadable resume PDF
+├── Tushar_Dhumal_PowerBI_Developer.pdf    # Downloadable resume PDF
 ├── BebasNeue.ttf               # Display typography asset
 └── .gitignore                  # Git exclusions for clean repository
 ```
