@@ -596,24 +596,103 @@
             </div>
           </div>
 
-          <!-- Project 2 -->
-          <div class="project-card" data-category="corporate">
-            <div class="project-banner banner-2">
-              <div class="project-badge bmw-m-badge">BMW M-Performance BI</div>
-              <div class="project-overlay">
-                <span class="view-link">Explore Architecture →</span>
+          <!-- Project 2: BMW Executive Sales Intelligence & Advanced Analytics -->
+          <div class="project-card bmw-featured-project" data-category="corporate">
+            <!-- Interactive Image Carousel Banner -->
+            <div class="project-carousel-banner" id="bmwCardCarousel">
+              <div class="carousel-track-wrapper">
+                <div class="carousel-slides" id="bmwCardSlides">
+                  <div class="carousel-slide active" data-index="0" title="Click to view full screen">
+                    <img src="bmw-dashboard/bmw-overview.png" alt="BMW Macro Executive Overview Dashboard" loading="lazy">
+                    <div class="slide-meta-pill">Page 1: Macro Executive Overview</div>
+                  </div>
+                  <div class="carousel-slide" data-index="1" title="Click to view full screen">
+                    <img src="bmw-dashboard/bmw-strategy.png" alt="BMW Product and Vehicle Strategy Dashboard" loading="lazy">
+                    <div class="slide-meta-pill">Page 2: Product &amp; Vehicle Strategy</div>
+                  </div>
+                  <div class="carousel-slide" data-index="2" title="Click to view full screen">
+                    <img src="bmw-dashboard/bmw-regional.png" alt="BMW Regional and Customer Segmentation Dashboard" loading="lazy">
+                    <div class="slide-meta-pill">Page 3: Regional &amp; Customer Segmentation</div>
+                  </div>
+                  <div class="carousel-slide" data-index="3" title="Click to view full screen">
+                    <img src="bmw-dashboard/bmw-desktop.png" alt="BMW Power BI Desktop DAX Model Engine" loading="lazy">
+                    <div class="slide-meta-pill">Architecture: Power BI Desktop DAX Engine</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Top Floating Controls -->
+              <div class="carousel-top-bar">
+                <div class="project-badge bmw-m-badge">
+                  <span class="bmw-badge-m-stripes"></span>
+                  BMW M-Performance BI
+                </div>
+                <button type="button" class="expand-lightbox-trigger" id="expandBmwLightboxBtn" title="Open Fullscreen View">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <polyline points="9 21 3 21 3 15"></polyline>
+                    <line x1="21" y1="3" x2="14" y2="10"></line>
+                    <line x1="3" y1="21" x2="10" y2="14"></line>
+                  </svg>
+                  <span>Fullscreen ⛶</span>
+                </button>
+              </div>
+
+              <!-- Carousel Arrow Navigation -->
+              <button type="button" class="carousel-arrow prev" id="bmwSlidePrev" aria-label="Previous Slide">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              </button>
+              <button type="button" class="carousel-arrow next" id="bmwSlideNext" aria-label="Next Slide">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+
+              <!-- Carousel Bottom Status Bar & Indicators -->
+              <div class="carousel-bottom-bar">
+                <span class="carousel-indicator-text" id="bmwIndicatorText">1 / 4 • Executive Overview</span>
+                <div class="carousel-dots" id="bmwCardDots">
+                  <button type="button" class="carousel-dot active" data-index="0" aria-label="Slide 1"></button>
+                  <button type="button" class="carousel-dot" data-index="1" aria-label="Slide 2"></button>
+                  <button type="button" class="carousel-dot" data-index="2" aria-label="Slide 3"></button>
+                  <button type="button" class="carousel-dot" data-index="3" aria-label="Slide 4"></button>
+                </div>
               </div>
             </div>
+
+            <!-- Project Body -->
             <div class="project-body">
               <div class="project-tags">
-                <span>Power BI</span>
+                <span>Power BI Desktop</span>
                 <span>Advanced DAX</span>
-                <span>Data Modeling</span>
+                <span>Star Schema</span>
+                <span>Waterfall Variance</span>
+                <span>Bing Maps GIS</span>
               </div>
-              <h3 class="project-title">Sales &amp; BMW Sales Advance Platforms</h3>
-              <p class="project-summary">Designed executive-ready reporting frameworks, including an automated Sales Advance Dashboard and specialized BMW Sales Advance reporting platform tracking real-time KPI metrics.</p>
+              <h3 class="project-title">BMW Executive Sales Intelligence &amp; Advanced Analytics Platform</h3>
+
+              <!-- Quick Key Metrics Bar -->
+              <div class="bmw-project-metrics-grid">
+                <div class="bpm-item">
+                  <span class="bpm-num">$19.0T / 253M</span>
+                  <span class="bpm-label">Global Revenue &amp; Fleet Units</span>
+                </div>
+                <div class="bpm-item">
+                  <span class="bpm-num">+14.53%</span>
+                  <span class="bpm-label">YoY Growth (DAX Time-Intell)</span>
+                </div>
+                <div class="bpm-item">
+                  <span class="bpm-num">50% Share</span>
+                  <span class="bpm-label">Eco Powertrain (Hybrid / EV)</span>
+                </div>
+              </div>
+
+              <p class="project-summary">Architected an enterprise-grade 3-page executive analytics ecosystem monitoring <strong>$19.0T global revenue across 253M vehicles</strong>. Engineered a high-performance Star Schema data model with dynamic DAX Time Intelligence, revenue variance Waterfall decomposition across 6 continents (North America, Europe, Asia, Middle East, South America, Africa), pricing-to-mileage regression scatter modeling ($75.03K average price), and Bing Maps geospatial fleet intelligence.</p>
+
               <div class="project-links">
-                <a href="#contact" class="proj-action primary">Discuss Solution</a>
+                <button type="button" class="proj-action primary open-bmw-lightbox-cta" id="openBmwModalFromBtn">
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
+                  <span>View Fullscreen ⛶</span>
+                </button>
+                <a href="#contact" class="proj-action">Discuss Solution</a>
                 <a href="https://github.com/mrdhumaltushar/portfolio/raw/main/Tushar_Dhumal_PowerBI_Developer.pdf" target="_blank" class="proj-action" download="Tushar_Dhumal_PowerBI_Developer.pdf">Resume Details</a>
               </div>
             </div>
@@ -712,7 +791,7 @@
                 <div class="step-info">
                   <div class="step-header">
                     <h4 class="step-title">Power BI Developer</h4>
-                    <span class="step-date">Sep 2026 — Present</span>
+                    <span class="step-date">Sep&copy; 2026 — Present</span>
                   </div>
                   <span class="step-promo-tag">🚀 Promoted from Intern</span>
                 </div>
@@ -726,7 +805,7 @@
                 <div class="step-info">
                   <div class="step-header">
                     <h4 class="step-title">Power BI &amp; Data Analyst Intern</h4>
-                    <span class="step-date">Jan 2026 — Sep 2026</span>
+                    <span class="step-date">Jan&copy; 2026 — Sep&copy; 2026</span>
                   </div>
                   <span class="step-subtext">9-Month Accelerated BI Internship</span>
                 </div>
@@ -790,7 +869,7 @@
                 <h4 class="banner-role-title">Data Analyst</h4>
                 <span class="banner-role-sub">Cross-Functional Client BI &amp; Analytics Consulting</span>
               </div>
-              <span class="banner-date-badge">Jan 2023 — Jan 2026</span>
+              <span class="banner-date-badge">Jan 2023 — Jan&copy; 2026</span>
             </div>
 
             <!-- Key Impact Highlights -->
@@ -993,7 +1072,7 @@
     <div class="container footer-content">
       <div class="footer-left">
         <a href="#hero" class="footer-logo">TUSHAR<span class="dot">.</span></a>
-        <p>© 2026 Tushar Dhumal. Microsoft PL-300 Certified Power BI Developer &amp; Data Analyst.</p>
+        <p>©&copy; 2026 Tushar Dhumal. Microsoft PL-300 Certified Power BI Developer &amp; Data Analyst.</p>
       </div>
 
       <div class="footer-right">
@@ -1007,6 +1086,82 @@
       </div>
     </div>
   </footer>
+
+  
+  <!-- ==================== BMW DASHBOARD FULLSCREEN LIGHTBOX MODAL ==================== -->
+  <div id="bmwLightboxModal" class="bmw-lightbox-modal" aria-hidden="true" role="dialog" aria-labelledby="bmwModalHeading">
+    <div class="bmw-lightbox-backdrop" id="bmwLightboxBackdrop"></div>
+    <div class="bmw-lightbox-dialog">
+      <!-- Modal Header -->
+      <div class="bmw-lightbox-header">
+        <div class="bmw-modal-title-group">
+          <div class="bmw-m-tricolor-line"></div>
+          <div>
+            <div class="bmw-modal-kicker">BMW EXECUTIVE SALES INTELLIGENCE &bull; ENTERPRISE BI</div>
+            <h2 id="bmwModalHeading" class="bmw-modal-title">Page 1: Macro Executive Overview</h2>
+          </div>
+        </div>
+        <div class="bmw-modal-header-actions">
+          <span class="bmw-modal-counter" id="bmwModalCounter">1 / 4</span>
+          <button type="button" class="bmw-modal-icon-btn" id="bmwModalFullscreenBtn" title="Toggle Fullscreen" aria-label="Toggle Fullscreen">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+          </button>
+          <button type="button" class="bmw-modal-icon-btn bmw-modal-close" id="bmwModalCloseBtn" title="Close Fullscreen (Esc)" aria-label="Close Fullscreen View">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Stage Viewer -->
+      <div class="bmw-lightbox-stage">
+        <button type="button" class="bmw-stage-nav-arrow prev" id="bmwModalPrev" aria-label="Previous Page">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+
+        <div class="bmw-stage-image-container" id="bmwStageImgContainer">
+          <img id="bmwModalMainImg" src="bmw-dashboard/bmw-overview.png" alt="BMW Fullscreen Dashboard View">
+          <div class="bmw-fullscreen-zoom-badge">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+            Click image or press F for native full-view
+          </div>
+        </div>
+
+        <button type="button" class="bmw-stage-nav-arrow next" id="bmwModalNext" aria-label="Next Page">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+
+      <!-- Modal Footer with KPIs & Thumbnails -->
+      <div class="bmw-lightbox-footer">
+        <div class="bmw-modal-caption-kpis" id="bmwModalKpis">
+          <div class="modal-kpi-pill"><span class="kpi-k">Revenue</span><span class="kpi-v">$19.0T</span></div>
+          <div class="modal-kpi-pill"><span class="kpi-k">Fleet Units</span><span class="kpi-v">253M</span></div>
+          <div class="modal-kpi-pill"><span class="kpi-k">YoY Growth</span><span class="kpi-v success">+14.53%</span></div>
+          <div class="modal-kpi-pill"><span class="kpi-k">Eco Mix</span><span class="kpi-v">Hybrid 24.6% &bull; Electric 25.0%</span></div>
+          <div class="modal-kpi-pill"><span class="kpi-k">Top Series</span><span class="kpi-v">7 Series &bull; 3 Series &bull; i8</span></div>
+        </div>
+
+        <div class="bmw-modal-thumb-strip" id="bmwModalThumbStrip">
+          <button type="button" class="bmw-thumb-card active" data-index="0">
+            <div class="thumb-img-wrapper"><img src="bmw-dashboard/bmw-overview.png" alt="Overview Thumbnail"></div>
+            <span class="thumb-label">1. Overview</span>
+          </button>
+          <button type="button" class="bmw-thumb-card" data-index="1">
+            <div class="thumb-img-wrapper"><img src="bmw-dashboard/bmw-strategy.png" alt="Strategy Thumbnail"></div>
+            <span class="thumb-label">2. Strategy</span>
+          </button>
+          <button type="button" class="bmw-thumb-card" data-index="2">
+            <div class="thumb-img-wrapper"><img src="bmw-dashboard/bmw-regional.png" alt="Regional Thumbnail"></div>
+            <span class="thumb-label">3. Regional</span>
+          </button>
+          <button type="button" class="bmw-thumb-card" data-index="3">
+            <div class="thumb-img-wrapper"><img src="bmw-dashboard/bmw-desktop.png" alt="DAX Model Thumbnail"></div>
+            <span class="thumb-label">4. DAX Model</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Script File -->
   <script src="script.js"></script>
