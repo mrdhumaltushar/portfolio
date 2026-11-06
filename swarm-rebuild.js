@@ -38,11 +38,12 @@
   const _isTablet = typeof window !== "undefined" && (_winW > 768 && _winW <= 1024);
   const _isLowSpec = typeof navigator !== "undefined" && (navigator.hardwareConcurrency || 4) <= 4;
   
-  const MIN_AGENTS = _isMobile ? 4 : (_isTablet ? 6 : 8);
-  const MAX_AGENTS = _isMobile ? 10 : (_isTablet ? 16 : (_isLowSpec ? 20 : 32));
-  const FLOCK_AGENTS = _isMobile ? 8 : (_isTablet ? 12 : (_isLowSpec ? 16 : 24));
-  const INTRO_AGENTS = _isMobile ? 5 : (_isTablet ? 8 : 14);
-  const MAX_ITEMS = _isMobile ? 1200 : 3500;
+  // MIN_AGENTS = 0: arrows leave as soon as their element work is complete
+  const MIN_AGENTS = 0;
+  const MAX_AGENTS = _isMobile ? 4 : (_isTablet ? 8 : (_isLowSpec ? 10 : 16));
+  const FLOCK_AGENTS = 0;
+  const INTRO_AGENTS = _isMobile ? 4 : (_isTablet ? 6 : 8);
+  const MAX_ITEMS = _isMobile ? 1000 : 3500;
   const MAX_WORLD_H = _isMobile ? 12000 : 35000;
   const SVGNS = "http://www.w3.org/2000/svg";
 
@@ -1485,7 +1486,7 @@
   const STYLE = `
 :host{all:initial}
 *{box-sizing:border-box}
-.bg{position:absolute;inset:0;opacity:0;transition:opacity .5s ease}
+.bg{position:absolute;inset:0;opacity:1;background-color:#030712}
 .bg.on{opacity:1}
 .layer,.port{position:absolute;overflow:hidden;pointer-events:none}
 .layer{inset:0}
@@ -1514,7 +1515,7 @@
 .badges,.cursors{position:absolute;inset:0;pointer-events:none;overflow:hidden}
 .badge{position:absolute;transform:translate(-50%);padding:1px 4px;border-radius:2px;color:#fff;font:600 11px/16px Inter,system-ui,-apple-system,"Segoe UI",sans-serif;white-space:nowrap;font-variant-numeric:tabular-nums}
 .cursor{position:absolute;left:0;top:0;will-change:transform}
-.cursor svg{position:absolute;overflow:visible;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.28))}
+.cursor svg{position:absolute;overflow:visible}
 .rulers{position:absolute;inset:0;pointer-events:none}
 .ruler{position:absolute;background:#2c2c2c;pointer-events:none}
 .ruler svg{display:block}
@@ -1628,15 +1629,12 @@
       for (const old of document.querySelectorAll("swarm-rebuild")) old.remove();
       const host = document.createElement("swarm-rebuild");
       host.style.cssText =
-        "all:initial !important;position:fixed !important;inset:0 !important;z-index:2147483647 !important;display:block !important;pointer-events:auto !important;contain:strict !important;opacity:1;transition:opacity .6s ease;";
+        "all:initial !important;position:fixed !important;inset:0 !important;z-index:2147483647 !important;display:block !important;pointer-events:none !important;contain:strict !important;opacity:1;background:#030712 !important;";
       env.host = host;
       this.host = host;
-      // [curtain] Clean up preload veil and transition curtain
+      // Instant curtain handoff: host is already opaque #030712, so remove curtain immediately with zero flash
       const _curtain = document.getElementById("swarm-curtain");
-      if (_curtain) {
-        _curtain.style.opacity = "0";
-        setTimeout(() => _curtain.remove(), 350);
-      }
+      if (_curtain) { _curtain.remove(); }
       const _veil = document.getElementById("swarm-preload-veil");
       if (_veil) { _veil.remove(); }
       document.documentElement.style.removeProperty("visibility");
@@ -2417,6 +2415,27 @@
           if (c.leaving) {
             if (c.worked) this.retired++;
             this.cursors.splice(this.cursors.indexOf(c), 1);
+          } else if (!c.task) {
+            // Task finished! Pick next immediately available task in view, or leave clean
+            const nextT = this.pick(c, avail);
+            if (nextT) {
+              avail.splice(avail.indexOf(nextT), 1);
+              nextT.state = "active";
+              this.waitCount--;
+              c.task = nextT;
+              c.worked = true;
+              c.idleFor = 0;
+              if (nextT.layer !== "world") {
+                c.sticky = true;
+                c.x += vp.ox - vp.sx;
+                c.y += vp.oy - vp.sy;
+              }
+              c.gen = this.run(c, nextT);
+            } else {
+              // Arrow work on this element is done! Remove arrow smoothly off-screen
+              c.leaving = true;
+              c.gen = this.leave(c);
+            }
           }
         }
       }
@@ -3514,6 +3533,7 @@
         t.addEventListener(ev, fn, o);
         (this.unbinds || (this.unbinds = [])).push(() => t.removeEventListener(ev, fn, o));
       };
+      // Native window scroll triggers seamless world translation and unlocks on-scroll building
       const scrollTarget = this.env.isRoot ? window : this.env.scroller;
       on(scrollTarget, "scroll", () => {
         if (!this.view.frozen) this.view.syncWorld();
@@ -3532,42 +3552,6 @@
           stop(true);
         }
       }, true);
-      // Desktop wheel scrolling directly scrolls the window
-      on(this.view.host, "wheel", (e) => {
-        window.scrollBy({ top: e.deltaY, left: e.deltaX, behavior: "auto" });
-      }, { passive: true });
-      // Mobile touch drag scrolling
-      let touchStartY = 0;
-      let touchStartX = 0;
-      on(this.view.host, "touchstart", (e) => {
-        if (e.touches && e.touches.length === 1) {
-          touchStartY = e.touches[0].clientY;
-          touchStartX = e.touches[0].clientX;
-        }
-      }, { passive: true });
-      on(this.view.host, "touchmove", (e) => {
-        if (e.touches && e.touches.length === 1) {
-          const dy = touchStartY - e.touches[0].clientY;
-          const dx = touchStartX - e.touches[0].clientX;
-          touchStartY = e.touches[0].clientY;
-          touchStartX = e.touches[0].clientX;
-          window.scrollBy({ top: dy, left: dx, behavior: "auto" });
-        }
-      }, { passive: true });
-      // Clicking a navigation link in the shadow DOM smoothly scrolls to that section
-      on(this.view.host, "click", (e) => {
-        const path = e.composedPath ? e.composedPath() : [];
-        for (const el of path) {
-          const href = (el && el.getAttribute) ? el.getAttribute("href") : null;
-          if (href && href.startsWith("#")) {
-            const target = document.querySelector(href);
-            if (target) {
-              target.scrollIntoView({ behavior: "smooth" });
-              return;
-            }
-          }
-        }
-      });
     }
 
     renderSoundBtn() {
