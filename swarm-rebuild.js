@@ -1717,9 +1717,12 @@
       return { ...g, ox: this.g.ox, oy: this.g.oy };
     }
 
-    syncWorld() {
+    syncWorld(force) {
       const vp = this.vp;
-      this.world.style.transform = `translate(${-vp.sx}px,${-vp.sy}px)`;
+      if (!force && this._lastSx === vp.sx && this._lastSy === vp.sy) return;
+      this._lastSx = vp.sx;
+      this._lastSy = vp.sy;
+      this.world.style.transform = `translate3d(${-vp.sx}px,${-vp.sy}px,0)`;
     }
 
     mount(model) {
@@ -2022,8 +2025,17 @@
         }
         return;
       }
-      this._rulersOn = true;
       const vp = E.vp;
+      const stepX = Math.floor(vp.sx / 50);
+      const stepY = Math.floor(vp.sy / 50);
+      const isDragging = E.guides && E.guides.some((g) => g.dragging);
+      if (!isDragging && this._rulersOn && this._lastRulerStepX === stepX && this._lastRulerStepY === stepY && Math.abs((this._lastRulerT || 0) - t) < 0.05) {
+        return;
+      }
+      this._rulersOn = true;
+      this._lastRulerStepX = stepX;
+      this._lastRulerStepY = stepY;
+      this._lastRulerT = t;
       const W = this.W;
       const H = this.H;
       const step = 100;
@@ -2082,14 +2094,21 @@
       }
       if (E.items) {
         const vp = E.vp;
-        const vTop = vp.sy - 350;
-        const vBot = vp.sy + vp.vh + 350;
+        const vTop = vp.sy - 450;
+        const vBot = vp.sy + vp.vh + 450;
         for (const it of E.items) {
-          // Fast-path: already settled elements outside active viewport need zero checks
+          const n = it.node;
           if (it.done && it.rv === it.v) {
+            // Fast-path: off-screen finished elements are hidden from GPU rasterizer during scroll
+            if (n) {
+              const isNear = (it.y + it.h >= vTop && it.y <= vBot);
+              if (!isNear && n.style.visibility !== "hidden") n.style.visibility = "hidden";
+              else if (isNear && n.style.visibility === "hidden") n.style.visibility = "";
+            }
             continue;
           }
           if (it.y + it.h >= vTop && it.y <= vBot) {
+            if (n && n.style.visibility === "hidden") n.style.visibility = "";
             this.renderItem(it);
           } else if (it.vis && !it.done) {
             this.renderItem(it);
@@ -3091,6 +3110,7 @@
       this.pressTimes = [];
       this.ends = []; // when each sounding piano voice dies out
       this.fakeNow = null; // offline renders drive the clock explicitly
+      this.queuedSong = [];
     }
 
     init(offline) {
@@ -3116,7 +3136,7 @@
       comp.connect(out);
       out.connect(ctx.destination);
       const verb = ctx.createConvolver();
-      verb.buffer = this.impulse(3.2, 2.4);
+      verb.buffer = this.impulse(1.2, 2.8);
       const wet = ctx.createGain();
       wet.gain.value = 0.5;
       verb.connect(wet);
@@ -3169,7 +3189,21 @@
     }
 
     resume() {
-      if (this.ctx && this.ctx.state === "suspended" && this.ctx.resume) this.ctx.resume().catch(() => {});
+      if (!this.ctx) return;
+      const playQueued = () => {
+        this.t0 = this.now(); // Re-anchor musical clock to exact interaction moment!
+        if (this.queuedSong && this.queuedSong.length > 0) {
+          const queue = [...this.queuedSong];
+          this.queuedSong = [];
+          if (queue.includes("intro")) this.intro();
+          if (queue.includes("start")) setTimeout(() => this.start(), 240);
+        }
+      };
+      if (this.ctx.state === "suspended" && this.ctx.resume) {
+        this.ctx.resume().then(playQueued).catch(() => {});
+      } else if (this.ctx.state === "running") {
+        playQueued();
+      }
     }
 
     get blocked() {
@@ -3378,7 +3412,11 @@
     // the page dissolving: an airy swell over a low open fifth
     intro() {
       this.log("intro", []);
-      if (!this.ready()) return;
+      if (!this.ready()) {
+        if (!this.queuedSong) this.queuedSong = [];
+        if (!this.queuedSong.includes("intro")) this.queuedSong.push("intro");
+        return;
+      }
       const ctx = this.ctx;
       const t = this.now() + 0.02;
       const src = ctx.createBufferSource();
@@ -3422,7 +3460,11 @@
     // the swarm fans out: E G# B E arpeggio on the grid
     start() {
       this.log("start", []);
-      if (!this.ready()) return;
+      if (!this.ready()) {
+        if (!this.queuedSong) this.queuedSong = [];
+        if (!this.queuedSong.includes("start")) this.queuedSong.push("start");
+        return;
+      }
       const { when } = this.grid(4);
       const step = 60 / this.bpm / 4;
       [E2 + 24, E2 + 28, E2 + 31, E2 + 36, E2 + 40].forEach((m, i) => this.piano(m, when + i * step, 0.2, -0.5 + i * 0.25, 2));
@@ -3587,7 +3629,8 @@
       };
       const scrollTarget = this.env.isRoot ? window : this.env.scroller;
       on(scrollTarget, "scroll", () => {
-        if (!this.view.frozen) this.view.syncWorld();
+        // High-precision scroll decoupling: record activity passively, actual DOM transform is synced inside RAF
+        if (this.engine) this.engine.vel = Math.max(this.engine.vel, 60);
       }, { passive: true });
       on(window, "resize", () => this.view.measure());
       on(window, "wheel", () => {
