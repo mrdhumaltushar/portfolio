@@ -86,6 +86,24 @@ body {
   z-index: 0;
 }
 
+/* Swarm Real-Element Blueprint Rebuild State */
+.swarm-target {
+  opacity: 0;
+  transform: translateY(18px) scale(0.985);
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.swarm-target.swarm-building {
+  opacity: 0.5;
+  transform: translateY(6px) scale(0.995);
+}
+
+.swarm-target.swarm-built {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
 /* Subtle Cursor Glow Follower */
 .custom-cursor-glow {
   position: fixed;
