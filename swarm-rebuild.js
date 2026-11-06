@@ -1484,7 +1484,7 @@
 .layer,.port{position:absolute;overflow:hidden;pointer-events:none}
 .layer{inset:0}
 .world{position:absolute;left:0;top:0;will-change:transform}
-.it{position:absolute;left:0;top:0;transform-origin:0 0}
+.it{position:absolute;left:0;top:0;transform-origin:0 0;contain:layout style}
 .it.settle{transition:transform .3s cubic-bezier(.2,.8,.2,1)}
 .r{background-color:var(--ph,#D9D9D9);transition:background-color .22s ease,border-radius .22s ease}
 .r.st{background-color:transparent}
@@ -2080,7 +2080,22 @@
           for (const d of this.backdrops) d.style.opacity = o;
         }
       }
-      if (E.items) for (const it of E.items) this.renderItem(it);
+      if (E.items) {
+        const vp = E.vp;
+        const vTop = vp.sy - 350;
+        const vBot = vp.sy + vp.vh + 350;
+        for (const it of E.items) {
+          // Fast-path: already settled elements outside active viewport need zero checks
+          if (it.done && it.rv === it.v) {
+            continue;
+          }
+          if (it.y + it.h >= vTop && it.y <= vBot) {
+            this.renderItem(it);
+          } else if (it.vis && !it.done) {
+            this.renderItem(it);
+          }
+        }
+      }
       this.renderOverlay(E);
       this.renderCursors(E);
       this.renderRulers(E);
@@ -2250,9 +2265,15 @@
 
     available() {
       const out = [];
+      const top = this.viewTop - 350;
+      const bot = this.viewBot + 350;
       for (const t of this.tasks) {
         if (t.state !== "wait") continue;
-        if (t.layer === "world" && t.gate > this.frontier) continue;
+        if (t.layer === "world") {
+          if (t.gate > this.frontier) continue;
+          const y = this.taskY(t);
+          if (y < top || y > bot) continue; // Spatial viewport filtering: eliminates bottom-page lag!
+        }
         let ok = true;
         for (const d of t.deps)
           if (d.state !== "done") {
@@ -3588,8 +3609,11 @@
         }
         this.unlockSound();
       }, true);
-      // browsers only let audio start after a click/keypress on the page
-      on(window, "pointerdown", () => this.unlockSound(), true);
+      // Universal instant audio unlock: micro-movements, touch, scroll, focus instantly resume audio
+      const unlockEvents = ["pointerdown", "pointermove", "touchstart", "touchend", "wheel", "scroll", "keydown", "focus"];
+      for (const ev of unlockEvents) {
+        on(window, ev, () => this.unlockSound(), { passive: true });
+      }
       if (!this.env.isRoot) {
         on(this.view.host, "wheel", (e) => {
           e.preventDefault();
@@ -3615,9 +3639,17 @@
     }
 
     unlockSound() {
-      if (this.dead || !this.sfx || !this.sfx.blocked) return;
-      this.sfx.resume();
-      setTimeout(() => this.renderSoundBtn(), 80);
+      if (this.dead || !this.sfx) return;
+      if (this.sfx.blocked) {
+        this.sfx.resume();
+        if (!this._introPlayed) {
+          this._introPlayed = true;
+          setTimeout(() => {
+            if (this.sfx && this.sfx.ready()) this.sfx.intro();
+          }, 30);
+        }
+        setTimeout(() => this.renderSoundBtn(), 80);
+      }
     }
 
     renderSoundBtn() {}
