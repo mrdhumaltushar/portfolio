@@ -32,12 +32,18 @@
   const BLUE = "#0D99FF";
   const RED = "#F24822";
   const RULER = 20;
-  const MIN_AGENTS = 8;
-  const MAX_AGENTS = 48;
-  const FLOCK_AGENTS = 36;
-  const INTRO_AGENTS = 18;
-  const MAX_ITEMS = 4000;
-  const MAX_WORLD_H = 40000;
+  // === Adaptive Performance: scaled across Mobile, Tablet, Low-spec & Desktop ===
+  const _winW = typeof window !== "undefined" ? window.innerWidth : 1200;
+  const _isMobile = typeof window !== "undefined" && (_winW <= 768 || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent));
+  const _isTablet = typeof window !== "undefined" && (_winW > 768 && _winW <= 1024);
+  const _isLowSpec = typeof navigator !== "undefined" && (navigator.hardwareConcurrency || 4) <= 4;
+  
+  const MIN_AGENTS = _isMobile ? 4 : (_isTablet ? 6 : 8);
+  const MAX_AGENTS = _isMobile ? 10 : (_isTablet ? 16 : (_isLowSpec ? 20 : 32));
+  const FLOCK_AGENTS = _isMobile ? 8 : (_isTablet ? 12 : (_isLowSpec ? 16 : 24));
+  const INTRO_AGENTS = _isMobile ? 5 : (_isTablet ? 8 : 14);
+  const MAX_ITEMS = _isMobile ? 1200 : 3500;
+  const MAX_WORLD_H = _isMobile ? 12000 : 35000;
   const SVGNS = "http://www.w3.org/2000/svg";
 
   const rand = (a, b) => a + Math.random() * (b - a);
@@ -1522,7 +1528,7 @@
 .intro.gone{opacity:0;transform:translate(-50%,-50%) scale(.9)}
 .intro img{display:block;width:60px;height:60px;object-fit:contain;filter:grayscale(1);opacity:.42;border-radius:14px}
 .intro .mono{width:60px;height:60px;border-radius:16px;background:#D7DADE;color:#fff;font:700 30px/60px Inter,system-ui,sans-serif;text-align:center}
-.hud{position:absolute;left:50%;bottom:20px;transform:translate(-50%,18px);opacity:0;display:flex;align-items:center;gap:10px;padding:6px 6px 6px 10px;background:rgba(30,30,30,.94);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:#fff;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.28),inset 0 0 0 1px rgba(255,255,255,.07);font:500 12px/1 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;pointer-events:auto;transition:opacity .45s ease,transform .45s cubic-bezier(.2,.8,.2,1);white-space:nowrap;user-select:none;z-index:5}
+.hud{display:none!important;position:absolute;left:50%;bottom:20px;transform:translate(-50%,18px);opacity:0;display:none;align-items:center;gap:10px;padding:6px 6px 6px 10px;background:rgba(30,30,30,.94);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:#fff;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.28),inset 0 0 0 1px rgba(255,255,255,.07);font:500 12px/1 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;pointer-events:auto;transition:opacity .45s ease,transform .45s cubic-bezier(.2,.8,.2,1);white-space:nowrap;user-select:none;z-index:5}
 .hud.on{opacity:1;transform:translate(-50%,0)}
 .hud .dots{display:flex;padding-left:5px}
 .hud .dots i{display:block;width:18px;height:18px;margin-left:-5px;border-radius:50%;border:2px solid #1e1e1e;font:700 9px/14px Inter,system-ui,sans-serif;font-style:normal;text-align:center;color:#fff;transition:background .3s}
@@ -1625,6 +1631,16 @@
         "all:initial !important;position:fixed !important;inset:0 !important;z-index:2147483647 !important;display:block !important;pointer-events:auto !important;contain:strict !important;opacity:1;transition:opacity .6s ease;";
       env.host = host;
       this.host = host;
+      // [curtain] Clean up preload veil and transition curtain
+      const _curtain = document.getElementById("swarm-curtain");
+      if (_curtain) {
+        _curtain.style.opacity = "0";
+        setTimeout(() => _curtain.remove(), 350);
+      }
+      const _veil = document.getElementById("swarm-preload-veil");
+      if (_veil) { _veil.remove(); }
+      document.documentElement.style.removeProperty("visibility");
+      
       const root = host.attachShadow({ mode: "open" });
       this.root = root;
       root.innerHTML = `<style>${STYLE}</style>
@@ -1636,18 +1652,7 @@
 <svg class="ov"></svg>
 <div class="badges"></div>
 <div class="cursors"></div>
-<div class="rulers"></div>
-<div class="hud">
-  <div class="dots"></div>
-  <div class="txt"><span class="status">Scanning page…</span></div>
-  <div class="bar"><i></i></div>
-  <button data-a="tour" title="Auto-scroll while the swarm builds">Tour</button>
-  <button data-a="speed" title="Build speed">1×</button>
-  <button data-a="sound" class="snd" title="Sound (M)"></button>
-  <button data-a="live" class="pri" hidden title="Fade back to the real page">Go live</button>
-  <button data-a="replay" hidden title="Wipe and rebuild again">Replay</button>
-  <button data-a="close" class="x" title="Exit (Esc)">✕</button>
-</div>`;
+<div class="rulers"></div>`;
       const $ = (s) => root.querySelector(s);
       this.bg = $(".bg");
       this.under = $(".under");
@@ -1659,10 +1664,10 @@
       this.badges = $(".badges");
       this.cursorsEl = $(".cursors");
       this.rulers = $(".rulers");
-      this.hud = $(".hud");
-      this.status = $(".status");
-      this.barFill = $(".bar i");
-      this.dots = $(".dots");
+      this.hud = null;
+      this.status = null;
+      this.barFill = null;
+      this.dots = null;
       this.cursorEls = new Map();
       this._ovS = "";
       this._ovB = "";
@@ -2322,7 +2327,12 @@
         }
       }
 
-      if (!this.flocking && this.started && this.waitCount === 0) {
+      const _busy = this.cursors.filter((c) => c.task).length;
+      const _viewportDone = (avail.length === 0 && _busy === 0 && this.doneCount > 0);
+      if (!this.flocking && this.started && (this.waitCount === 0 || _viewportDone)) {
+        if (this.items) {
+          for (const it of this.items) it.vis = true;
+        }
         for (const c of this.cursors)
           if (!c.task && !c.follow) {
             c.follow = true;
@@ -3066,53 +3076,21 @@
 
   class Sound {
     constructor() {
-      this.on = soundPref;
+      this.on = false;
       this.ctx = null;
-      this.bpm = 104;
-      this.slots = new Map();
-      this.lastKey = new Map();
-      this.keyTimes = [];
-      this.pressTimes = [];
-      this.ends = []; // when each sounding piano voice dies out
-      this.fakeNow = null; // offline renders drive the clock explicitly
     }
-
-    init(offline) {
-      if (this.ctx) return true;
-      try {
-        const Ctx = window.AudioContext || window.webkitAudioContext;
-        this.ctx = offline || new Ctx({ latencyHint: "interactive" });
-      } catch (_) {
-        return false;
-      }
-      const ctx = this.ctx;
-      const out = ctx.createGain();
-      out.gain.value = this.on ? 1 : 0;
-      const comp = ctx.createDynamicsCompressor();
-      comp.threshold.value = -18;
-      comp.knee.value = 14;
-      comp.ratio.value = 5;
-      comp.attack.value = 0.003;
-      comp.release.value = 0.3;
-      const master = ctx.createGain();
-      master.gain.value = 0.9;
-      master.connect(comp);
-      comp.connect(out);
-      out.connect(ctx.destination);
-      const verb = ctx.createConvolver();
-      verb.buffer = this.impulse(3.2, 2.4);
-      const wet = ctx.createGain();
-      wet.gain.value = 0.5;
-      verb.connect(wet);
-      wet.connect(master);
-      this.out = out;
-      this.master = master;
-      this.verb = verb;
-      this.noiseBuf = this.noise(1.5);
-      this.t0 = this.now();
-      return true;
-    }
-
+    init() { return false; }
+    intro() {}
+    press() {}
+    key() {}
+    grow() {}
+    snap() {}
+    place() {}
+    finale() {}
+    release() {}
+    close() {}
+    resume() {}
+    setOn() {}
     now() {
       return this.fakeNow != null ? this.fakeNow : this.ctx.currentTime;
     }
@@ -3467,7 +3445,8 @@
       this.tourV = 0;
       this.tourAcc = 0;
       this.speeds = [1, 2, 3];
-      this.speedIx = 0;
+      // [patched] Start at 2x speed on mobile/low-spec for better performance
+      this.speedIx = (_isMobile || _isLowSpec) ? 1 : 0;
       this.complete = false;
       this.timing = {};
     }
@@ -3494,32 +3473,21 @@
       const shotP = this.loadShot();
       this.view = new View(this.env);
       this.engine = new Engine(this.view);
-      this.sfx = new Sound();
-      this.sfx.init();
-      this.engine.sfx = this.sfx;
-      this.engine.onStart = () => this.view.intro.classList.add("gone");
+      this.engine.speed = (_isMobile || _isLowSpec) ? 1.8 : 1.4;
+      this.sfx = null;
+      this.engine.onStart = () => this.view.intro && this.view.intro.classList.add("gone");
       this.engine.onComplete = () => this.onComplete();
       this.bind();
       this.last = performance.now();
       this.raf = requestAnimationFrame((t) => this.frame(t));
       await nextFrame();
-      this.renderSoundBtn();
-      this.sfx.intro();
       this.view.bg.classList.add("on");
-      this.view.intro.classList.add("on");
-      this.view.hud.classList.add("on");
-      const mark = (k) => (this.timing[k] = Math.round(performance.now() - this.t0));
-      await sleep(520);
-      await unhidePage();
-      mark("blank");
-      if (this.dead) return;
-      await this.scan();
-      mark("scan");
-      if (this.dead) return;
+      if (this.view.intro) this.view.intro.classList.add("on");
+
+      // Swift font and layout settle buffer (fast direct start!)
       try {
-        await Promise.race([document.fonts.ready, sleep(1200)]);
+        await Promise.race([document.fonts.ready, sleep(120)]);
       } catch (_) {}
-      mark("fonts");
       this.view.measure();
       const shot = await shotP;
       if (shot) {
@@ -3533,35 +3501,16 @@
         console.error("[swarm-rebuild] capture failed", err);
         model = { items: [], tasks: [], groups: [], guides: [], docW: 0, docH: 0 };
       }
-      mark("capture");
       if (this.dead) return;
       this.view.mount(model);
       this.engine.setModel(model);
       this.model = model;
-      mark("mount");
-      const wait = 1500 - (performance.now() - this.t0);
-      if (wait > 0) await sleep(wait);
       if (this.dead) return;
       this.engine.start();
     }
 
     async scan() {
-      const env = this.env;
-      const g = env.geom();
-      const H = env.scrollHeight();
-      if (H <= g.vh * 1.25) return;
-      this.view.frozen = { ...this.view.vp };
-      const steps = Math.min(28, Math.ceil(H / (g.vh * 0.85)));
-      for (let i = 1; i <= steps && !this.dead; i++) {
-        env.scrollTo(Math.min(H, (H / steps) * i));
-        await nextFrame();
-        await sleep(30);
-      }
-      env.scrollTo(g.sy, g.sx);
-      await nextFrame();
-      await sleep(750);
-      env.scrollTo(g.sy, g.sx);
-      this.view.frozen = null;
+      return;
     }
 
     bind() {
@@ -3574,61 +3523,30 @@
         if (!this.view.frozen) this.view.syncWorld();
       }, { passive: true });
       on(window, "resize", () => this.view.measure());
-      on(window, "wheel", () => {
-        if (this.engine.ready) this.engine.start();
-      }, { passive: true });
       on(window, "pointermove", (e) => {
         this.engine.mouse = { x: e.clientX, y: e.clientY };
       }, { passive: true });
       on(document.documentElement, "pointerleave", () => {
         this.engine.mouse = null;
       });
+      // Esc key instantly reveals the live portfolio
       on(window, "keydown", (e) => {
         if (e.key === "Escape") {
           e.stopPropagation();
-          stop(false);
-        } else if ((e.key === "m" || e.key === "M") && !e.metaKey && !e.ctrlKey && !e.altKey) {
-          this.sfx.setOn(!this.sfx.on);
-          this.renderSoundBtn();
+          stop(true);
         }
-        this.unlockSound();
       }, true);
-      // browsers only let audio start after a click/keypress on the page
-      on(window, "pointerdown", () => this.unlockSound(), true);
-      if (!this.env.isRoot) {
-        on(this.view.host, "wheel", (e) => {
-          e.preventDefault();
-          this.env.scroller.scrollBy({ top: e.deltaY, left: e.deltaX, behavior: "instant" });
-        }, { passive: false });
-      }
-      on(this.view.hud, "click", (e) => {
-        const b = e.target.closest("button");
-        if (!b) return;
-        const a = b.dataset.a;
-        if (a === "close") stop(false);
-        else if (a === "live") stop(true);
-        else if (a === "replay") restart();
-        else if (a === "tour") {
-          this.tour = !this.tour;
-          b.classList.toggle("on", this.tour);
-          b.textContent = this.tour ? "Touring" : "Tour";
-          if (this.tour) this.engine.start();
-        } else if (a === "sound") {
-          if (this.sfx.on && this.sfx.blocked) this.sfx.resume();
-          else this.sfx.setOn(!this.sfx.on);
-          setTimeout(() => this.renderSoundBtn(), 60);
-        } else if (a === "speed") {
-          this.speedIx = (this.speedIx + 1) % this.speeds.length;
-          this.engine.speed = this.speeds[this.speedIx];
-          b.textContent = this.speeds[this.speedIx] + "×";
+      // Clicking or tapping anywhere after 0.8s immediately reveals the portfolio
+      on(this.view.host, "click", () => {
+        if (performance.now() - this.t0 > 800) {
+          stop(true);
         }
       });
-    }
-
-    unlockSound() {
-      if (this.dead || !this.sfx || !this.sfx.blocked) return;
-      this.sfx.resume();
-      setTimeout(() => this.renderSoundBtn(), 80);
+      on(this.view.host, "touchend", () => {
+        if (performance.now() - this.t0 > 800) {
+          stop(true);
+        }
+      }, { passive: true });
     }
 
     renderSoundBtn() {
@@ -3657,7 +3575,7 @@
         if (!this._hudT || now - this._hudT > 200) {
           this._hudT = now;
           this.updateHud();
-          this.renderSoundBtn();
+          // this.renderSoundBtn(); // [patched] sound disabled
         }
       } catch (err) {
         console.error("[swarm-rebuild]", err);
@@ -3686,54 +3604,22 @@
       }
     }
 
-    updateHud() {
-      const E = this.engine;
-      const v = this.view;
-      if (!E.ready) return;
-      const workers = E.cursors.filter((c) => c.worked).length + E.retired;
-      const total = E.tasks.length;
-      const done = E.doneCount;
-      if (this.complete) return;
-      if (!E.started) v.status.innerHTML = `<b>${E.cursors.length}</b> agents ready<span class="sep"></span>${total.toLocaleString()} layers`;
-      else {
-        const pend = E.tasks.length - done;
-        const below = E.tasks.some((t) => t.state === "wait" && t.layer === "world" && t.gate > E.frontier);
-        v.status.innerHTML =
-          `<b>${workers}</b> agents<span class="sep"></span><b>${done.toLocaleString()}</b> / ${total.toLocaleString()} layers` +
-          (below && pend && !this.tour && E.backlog() === 0 ? `<span class="sep"></span>scroll to keep building` : "");
-      }
-      v.barFill.style.width = total ? `${(done / total) * 100}%` : "0%";
-      const busy = E.cursors.filter((c) => c.task).slice(-5);
-      const key = busy.map((c) => c.id).join(",");
-      if (key !== this._dots) {
-        this._dots = key;
-        v.dots.innerHTML = busy.map((c) => `<i style="background:${c.color}" title="${c.name}">${c.name[0]}</i>`).join("");
-      }
-    }
+    updateHud() {}
 
     onComplete() {
       this.complete = true;
-      if (this.sfx) this.sfx.finale();
-      const E = this.engine;
-      const v = this.view;
-      const workers = E.cursors.filter((c) => c.worked).length + E.retired;
-      const secs = (E.endTime - E.startTime).toFixed(1);
-      v.status.innerHTML = `Rebuilt by <b>${workers}</b> agents in <b>${secs}s</b>`;
-      v.barFill.style.width = "100%";
-      v.dots.innerHTML = "";
-      v.root.querySelector('[data-a="live"]').hidden = false;
-      v.root.querySelector('[data-a="replay"]').hidden = false;
-      v.root.querySelector('[data-a="tour"]').hidden = true;
-      v.root.querySelector('[data-a="speed"]').hidden = true;
+      // Rebuild finished: smoothly dissolve overlay and transition to live portfolio
+      setTimeout(() => stop(true), 600);
       this.tour = false;
     }
 
     destroy(reveal) {
       unhidePage();
-      if (this.sfx) {
-        if (reveal) this.sfx.release();
-        this.sfx.close(reveal ? 1.4 : 0.25);
-      }
+      // [patched] ensure page is always visible after destroy
+      document.documentElement.style.removeProperty("visibility");
+      const _veil2 = document.getElementById("swarm-preload-veil");
+      if (_veil2) _veil2.remove();
+      // sfx disabled: if (this.sfx) { ... }
       const finish = () => {
         this.dead = true;
         cancelAnimationFrame(this.raf);
@@ -3747,7 +3633,7 @@
           c.gen = null;
           c.follow = false;
         }
-        this.view.hud.classList.remove("on");
+        // this.view.hud.classList.remove("on"); // [patched] HUD hidden
         setTimeout(() => {
           this.view.host.style.setProperty("opacity", "0", "important");
         }, 450);
@@ -3784,10 +3670,6 @@
 
   function start() {
     if (app) return;
-    if (document.readyState !== "complete") {
-      window.addEventListener("load", () => setTimeout(start, 120), { once: true });
-      return;
-    }
     app = new App();
     app.run().catch((err) => console.error("[swarm-rebuild]", err));
   }
@@ -3807,10 +3689,15 @@
       cancelAnimationFrame(a.raf);
       for (const u of a.unbinds || []) u();
       a.view.host.remove();
-      if (a.sfx) a.sfx.close(0.1);
-      // rebuild from where the first run started so screenshot crops line up again
       if (lastShot) a.env.scrollTo(lastShot.at.sy, lastShot.at.sx);
     }
+    start();
+  }
+
+  // Immediate start on DOM ready (no waiting for window.onload + 120ms)
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => start(), { once: true });
+  } else {
     start();
   }
 
