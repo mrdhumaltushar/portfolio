@@ -555,7 +555,7 @@
       if (v)
         for (const c of el.children) {
           const tag = c.localName;
-          if (SKIP.has(tag) || tag === "br" || tag === "wbr") continue;
+          if (SKIP.has(tag) || tag === "br" || tag === "wbr" || c.id === "swarm-curtain") continue;
           if (c instanceof SVGElement) continue;
           const d = css(c).display;
           if (d === "none") continue;
@@ -1024,7 +1024,7 @@
     function walk(el, ctx, parent) {
       if (items.length >= MAX_ITEMS) return;
       const tag = el.localName;
-      if (SKIP.has(tag) || el === env.host) return;
+      if (SKIP.has(tag) || el === env.host || el.id === "swarm-curtain") return;
       const cs = css(el);
       const disp = cs.display;
       if (disp === "none") return;
@@ -1156,7 +1156,7 @@
           kinds.push(1);
           continue;
         }
-        if (n.nodeType !== 1 || SKIP.has(n.localName)) {
+        if (n.nodeType !== 1 || SKIP.has(n.localName) || n.id === "swarm-curtain") {
           kinds.push(0);
           continue;
         }
@@ -2327,12 +2327,8 @@
         }
       }
 
-      const _busy = this.cursors.filter((c) => c.task).length;
-      const _viewportDone = (avail.length === 0 && _busy === 0 && this.doneCount > 0);
-      if (!this.flocking && this.started && (this.waitCount === 0 || _viewportDone)) {
-        if (this.items) {
-          for (const it of this.items) it.vis = true;
-        }
+      // Rebuild on scroll: only complete when user has scrolled through all sections and ALL tasks are finished
+      if (!this.flocking && this.started && this.waitCount === 0) {
         for (const c of this.cursors)
           if (!c.task && !c.follow) {
             c.follow = true;
@@ -3536,17 +3532,42 @@
           stop(true);
         }
       }, true);
-      // Clicking or tapping anywhere after 0.8s immediately reveals the portfolio
-      on(this.view.host, "click", () => {
-        if (performance.now() - this.t0 > 800) {
-          stop(true);
-        }
-      });
-      on(this.view.host, "touchend", () => {
-        if (performance.now() - this.t0 > 800) {
-          stop(true);
+      // Desktop wheel scrolling directly scrolls the window
+      on(this.view.host, "wheel", (e) => {
+        window.scrollBy({ top: e.deltaY, left: e.deltaX, behavior: "auto" });
+      }, { passive: true });
+      // Mobile touch drag scrolling
+      let touchStartY = 0;
+      let touchStartX = 0;
+      on(this.view.host, "touchstart", (e) => {
+        if (e.touches && e.touches.length === 1) {
+          touchStartY = e.touches[0].clientY;
+          touchStartX = e.touches[0].clientX;
         }
       }, { passive: true });
+      on(this.view.host, "touchmove", (e) => {
+        if (e.touches && e.touches.length === 1) {
+          const dy = touchStartY - e.touches[0].clientY;
+          const dx = touchStartX - e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+          touchStartX = e.touches[0].clientX;
+          window.scrollBy({ top: dy, left: dx, behavior: "auto" });
+        }
+      }, { passive: true });
+      // Clicking a navigation link in the shadow DOM smoothly scrolls to that section
+      on(this.view.host, "click", (e) => {
+        const path = e.composedPath ? e.composedPath() : [];
+        for (const el of path) {
+          const href = (el && el.getAttribute) ? el.getAttribute("href") : null;
+          if (href && href.startsWith("#")) {
+            const target = document.querySelector(href);
+            if (target) {
+              target.scrollIntoView({ behavior: "smooth" });
+              return;
+            }
+          }
+        }
+      });
     }
 
     renderSoundBtn() {
