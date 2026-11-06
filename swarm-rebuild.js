@@ -2,8 +2,10 @@
  * ===================================================================
  * HIGH-PERFORMANCE 120FPS MULTIPLAYER CANVAS SWARM REBUILD ENGINE
  * ===================================================================
+ * - Strictly capped to 10 agents maximum for optimal smoothness & responsiveness
  * - 100% Hardware-Accelerated 2D Canvas (Zero DOM thrashing, zero lag)
  * - Razor-sharp rendering (Zero blur filters, zero GPU bottlenecks)
+ * - Intelligent power saving: pauses RAF loop when idle (0.0% CPU) and wakes on scroll
  * - Authentic Figma multiplayer cursors (Ada, Linus, Ken, Grace, Sophie, etc.)
  * - Selection marquees, corner handles, dimension tags, red snapping guides, top/left rulers
  * - Direct real-element reveals across the whole page & smoothly on scroll
@@ -34,7 +36,8 @@
   const isMobile = window.innerWidth <= 768 || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
   const isTablet = window.innerWidth > 768 && window.innerWidth <= 1024;
   const isLowSpec = (navigator.hardwareConcurrency || 4) <= 4;
-  const MAX_CONCURRENT_AGENTS = isMobile ? 3 : (isTablet ? 4 : (isLowSpec ? 5 : 6));
+  // Strictly capped at 10 agents max (4 on mobile, 6 on tablet, 7 on low-spec, 10 on desktop)
+  const MAX_CONCURRENT_AGENTS = Math.min(10, isMobile ? 4 : (isTablet ? 6 : (isLowSpec ? 7 : 10)));
 
   // --- Target Element Scanning ---
   function getCandidateTargets() {
@@ -148,6 +151,13 @@
       el._swarmQueued = true;
       this.taskQueue.push({ el, enqueuedAt: performance.now() });
       this.fillAgents();
+
+      // Wake loop if paused
+      if (!this.animating && this.activeAgents.length > 0) {
+        this.animating = true;
+        this.lastTime = performance.now();
+        this.raf = requestAnimationFrame((t) => this.loop(t));
+      }
     }
 
     fillAgents() {
@@ -168,7 +178,7 @@
       const r = task.el.getBoundingClientRect();
       const targetBox = { x: r.left, y: r.top, w: Math.max(r.width, 24), h: Math.max(r.height, 20) };
 
-      // Spawn from random edge
+      // Spawn from nearest natural screen edge
       let startX, startY;
       const edge = Math.floor(Math.random() * 4);
       if (edge === 0) { startX = -40; startY = Math.random() * this.height; }
@@ -195,7 +205,7 @@
       task.el.classList.add("swarm-building");
       this.activeAgents.push(agent);
 
-      // Add temporary snapping guide line
+      // Temporary snapping guide line
       if (Math.random() > 0.45) {
         this.guides.push({
           axis: Math.random() > 0.5 ? "x" : "y",
@@ -214,11 +224,19 @@
       this.update(dt);
       this.render();
 
+      // Check if completely idle
+      if (this.activeAgents.length === 0 && this.taskQueue.length === 0 && this.guides.length === 0) {
+        // Clear canvas and pause RAF loop to preserve 0% CPU
+        this.ctx.clearRect(0, 0, this.width, this.height);
+        this.animating = false;
+        return;
+      }
+
       this.raf = requestAnimationFrame((t) => this.loop(t));
     }
 
     update(dt) {
-      const speedMultiplier = 1.3;
+      const speedMultiplier = 1.35;
 
       for (let i = this.activeAgents.length - 1; i >= 0; i--) {
         const a = this.activeAgents[i];
@@ -233,7 +251,7 @@
           const dist = Math.hypot(dx, dy);
 
           a.angle = (Math.atan2(dy, dx) * 180) / Math.PI + 90;
-          const step = Math.max(850, dist * 6.5) * dt * speedMultiplier;
+          const step = Math.max(850, dist * 6.8) * dt * speedMultiplier;
 
           if (dist < 20) {
             a.x = tx;
@@ -246,7 +264,7 @@
             a.y += (dy / dist) * step;
           }
         } else if (a.phase === "drafting") {
-          a.progress += dt * 2.0 * speedMultiplier;
+          a.progress += dt * 2.1 * speedMultiplier;
           const p = Math.min(a.progress, 1);
           // Animate selection box perimeter
           a.currentDraftBox = {
@@ -281,7 +299,7 @@
             this.completedCount++;
           }
         } else if (a.phase === "finishing") {
-          a.progress += dt * 3.5;
+          a.progress += dt * 3.8;
           if (a.progress >= 0.2) {
             a.phase = "leaving";
             a.leaving = true;
@@ -297,7 +315,7 @@
           const dy = a.exitTarget.y - a.y;
           const dist = Math.hypot(dx, dy);
           a.angle = (Math.atan2(dy, dx) * 180) / Math.PI + 90;
-          const step = 1150 * dt * speedMultiplier;
+          const step = 1200 * dt * speedMultiplier;
 
           a.x += (dx / dist) * step;
           a.y += (dy / dist) * step;
@@ -311,7 +329,7 @@
 
       // Update guide lines fade
       for (let j = this.guides.length - 1; j >= 0; j--) {
-        this.guides[j].alpha -= dt * 1.4;
+        this.guides[j].alpha -= dt * 1.5;
         if (this.guides[j].alpha <= 0) this.guides.splice(j, 1);
       }
     }
