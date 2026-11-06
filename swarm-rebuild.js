@@ -1517,11 +1517,19 @@
 .ruler-corner{position:absolute;top:0;left:0;width:20px;height:20px;background:#2c2c2c}
 .rtext{font:500 9px Inter,system-ui,-apple-system,sans-serif;fill:#8c8c8c}
 .rsel{fill:#0d99ff}
-.intro{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.92);opacity:0;transition:opacity .35s ease,transform .45s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+.intro{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.92);opacity:0;transition:opacity .35s ease,transform .45s cubic-bezier(.2,.8,.2,1);pointer-events:auto;cursor:pointer;z-index:10}
 .intro.on{opacity:1;transform:translate(-50%,-50%)}
-.intro.gone{opacity:0;transform:translate(-50%,-50%) scale(.9)}
-.intro img{display:block;width:60px;height:60px;object-fit:contain;filter:grayscale(1);opacity:.42;border-radius:14px}
-.intro .mono{width:60px;height:60px;border-radius:16px;background:#D7DADE;color:#fff;font:700 30px/60px Inter,system-ui,sans-serif;text-align:center}
+.intro.gone{opacity:0;transform:translate(-50%,-50%) scale(.85);pointer-events:none}
+.intro-wrap{display:flex;flex-direction:column;align-items:center;gap:16px;user-select:none;cursor:pointer}
+.intro .mono{width:72px;height:72px;border-radius:20px;background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);border:1.5px solid rgba(56,189,248,0.5);color:#38bdf8;font:800 36px/72px Inter,system-ui,sans-serif;text-align:center;box-shadow:0 0 35px rgba(14,165,233,0.3),inset 0 1px 0 rgba(255,255,255,0.15);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+.intro-wrap:hover .mono{transform:scale(1.08);border-color:#38bdf8;box-shadow:0 0 45px rgba(14,165,233,0.55)}
+.intro-prompt{display:flex;align-items:center;gap:10px;padding:9px 22px;border-radius:999px;background:rgba(15,23,42,0.92);border:1.5px solid rgba(56,189,248,0.5);color:#ffffff;font:600 13px/1.2 Inter,system-ui,sans-serif;letter-spacing:0.3px;box-shadow:0 8px 24px rgba(0,0,0,0.5),0 0 20px rgba(14,165,233,0.25),inset 0 1px 0 rgba(255,255,255,0.15);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);animation:promptGlow 2.2s ease-in-out infinite;transition:all .25s ease;cursor:pointer}
+.intro-wrap:hover .intro-prompt{background:rgba(14,165,233,0.22);border-color:#38bdf8;box-shadow:0 8px 28px rgba(0,0,0,0.6),0 0 30px rgba(14,165,233,0.45);transform:translateY(-2px)}
+.intro-prompt.launching{background:rgba(14,165,233,0.3);border-color:#38bdf8;box-shadow:0 0 35px rgba(14,165,233,0.6)}
+.intro-prompt .snd-icon{stroke:#38bdf8;transition:transform .2s}
+.intro-wrap:hover .intro-prompt .snd-icon{transform:scale(1.15)}
+.intro-sub{font:500 11px/1.3 Inter,system-ui,sans-serif;color:rgba(148,163,184,0.85);letter-spacing:0.2px;text-align:center;pointer-events:none}
+@keyframes promptGlow{0%,100%{box-shadow:0 0 0 0 rgba(14,165,233,0.4),0 8px 24px rgba(0,0,0,0.5)}50%{box-shadow:0 0 0 8px rgba(14,165,233,0),0 8px 24px rgba(0,0,0,0.5),0 0 25px rgba(14,165,233,0.35)}}
 .hud{display:none !important;position:absolute;left:50%;bottom:20px;transform:translate(-50%,18px);opacity:0;display:flex;align-items:center;gap:10px;padding:6px 6px 6px 10px;background:rgba(30,30,30,.94);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:#fff;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.28),inset 0 0 0 1px rgba(255,255,255,.07);font:500 12px/1 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;pointer-events:auto;transition:opacity .45s ease,transform .45s cubic-bezier(.2,.8,.2,1);white-space:nowrap;user-select:none;z-index:5}
 .hud.on{opacity:1;transform:translate(-50%,0)}
 .hud .dots{display:flex;padding-left:5px}
@@ -1680,24 +1688,26 @@
     }
 
     makeIntroLogo() {
-      const links = [...document.querySelectorAll('link[rel~="icon"], link[rel="apple-touch-icon"], link[rel="shortcut icon"]')];
-      const sized = links
-        .map((l) => ({ href: l.href, s: parseInt((l.getAttribute("sizes") || "0").split("x")[0], 10) || (l.rel.includes("apple") ? 180 : 32) }))
-        .filter((l) => l.href)
-        .sort((a, b) => b.s - a.s);
-      const label = (document.title || location.hostname || "?").replace(/^www\./, "").trim();
-      const mono = () => {
-        this.intro.innerHTML = "";
-        const d = document.createElement("div");
-        d.className = "mono";
-        d.textContent = (label[0] || "?").toUpperCase();
-        this.intro.appendChild(d);
-      };
-      const href = sized.length ? sized[0].href : location.origin + "/favicon.ico";
-      const img = document.createElement("img");
-      img.onerror = mono;
-      img.src = href;
-      this.intro.appendChild(img);
+      this.intro.innerHTML = "";
+      const wrap = document.createElement("div");
+      wrap.className = "intro-wrap";
+
+      const d = document.createElement("div");
+      d.className = "mono";
+      d.textContent = "T";
+
+      const prompt = document.createElement("div");
+      prompt.className = "intro-prompt";
+      prompt.innerHTML = `<span>Click to Open Portfolio</span><svg class="snd-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>`;
+
+      const sub = document.createElement("div");
+      sub.className = "intro-sub";
+      sub.textContent = "Procedural audio and interactive swarm";
+
+      wrap.appendChild(d);
+      wrap.appendChild(prompt);
+      wrap.appendChild(sub);
+      this.intro.appendChild(wrap);
     }
 
     measure() {
@@ -2378,7 +2388,11 @@
       }
       if (!this.started) {
         const center = this.fromViewport(vp.ox + vp.vw / 2, vp.oy + vp.vh / 2);
-        if (this.follow(dt, this.cursors, center, 0.7) && this.ready) this.start();
+        this.follow(dt, this.cursors, center, 0.7);
+        if (this.wantsStart && this.ready) {
+          this.wantsStart = false;
+          this.start();
+        }
         return;
       }
       if (this.cursors.some((c) => c.follow))
@@ -3558,6 +3572,39 @@
       this.engine.onStart = () => this.view.intro.classList.add("gone");
       this.engine.onComplete = () => this.onComplete();
       this.bind();
+
+      // Universal instant launch trigger: registered from frame 0 so any early click unlocks audio!
+      const launch = (e) => {
+        if (this._hasLaunched || this.dead) return;
+        this._hasLaunched = true;
+        this.unlockSound();
+        if (this.sfx) {
+          this.sfx.resume();
+          setTimeout(() => { if (this.sfx && this.sfx.ready()) this.sfx.intro(); }, 30);
+        }
+        const promptEl = this.view.intro ? this.view.intro.querySelector(".intro-prompt") : null;
+        if (promptEl) {
+          promptEl.classList.add("launching");
+          promptEl.innerHTML = "<span>Opening Portfolio...</span>";
+        }
+        if (this.engine.ready) {
+          this.engine.start();
+        } else {
+          this.engine.wantsStart = true;
+        }
+      };
+
+      const launchHandler = (e) => launch(e);
+      window.addEventListener("pointerdown", launchHandler, { once: true });
+      window.addEventListener("keydown", launchHandler, { once: true });
+      if (this.view.intro) {
+        this.view.intro.addEventListener("click", launchHandler, { once: true });
+      }
+      if (this.view.host) {
+        this.view.host.addEventListener("click", launchHandler, { once: true });
+      }
+      // Generous fallback if user is completely idle for 15 seconds
+      setTimeout(() => { if (!this._hasLaunched) launch(); }, 15000);
       this.last = performance.now();
       this.raf = requestAnimationFrame((t) => this.frame(t));
       await nextFrame();
@@ -3567,7 +3614,7 @@
       this.view.intro.classList.add("on");
       if (this.view.hud) this.view.hud.classList.add("on");
       const mark = (k) => (this.timing[k] = Math.round(performance.now() - this.t0));
-      await sleep(520);
+      await sleep(120);
       await unhidePage();
       mark("blank");
       if (this.dead) return;
@@ -3575,7 +3622,7 @@
       mark("scan");
       if (this.dead) return;
       try {
-        await Promise.race([document.fonts.ready, sleep(1200)]);
+        await Promise.race([document.fonts.ready, sleep(300)]);
       } catch (_) {}
       mark("fonts");
       this.view.measure();
@@ -3597,10 +3644,9 @@
       this.engine.setModel(model);
       this.model = model;
       mark("mount");
-      const wait = 1500 - (performance.now() - this.t0);
-      if (wait > 0) await sleep(wait);
-      if (this.dead) return;
-      this.engine.start();
+      if (this._hasLaunched || this.engine.wantsStart) {
+        this.engine.start();
+      }
     }
 
     async scan() {
@@ -3609,15 +3655,15 @@
       const H = env.scrollHeight();
       if (H <= g.vh * 1.25) return;
       this.view.frozen = { ...this.view.vp };
-      const steps = Math.min(28, Math.ceil(H / (g.vh * 0.85)));
+      const steps = Math.min(8, Math.ceil(H / (g.vh * 1.5)));
       for (let i = 1; i <= steps && !this.dead; i++) {
         env.scrollTo(Math.min(H, (H / steps) * i));
         await nextFrame();
-        await sleep(30);
+        await sleep(15);
       }
       env.scrollTo(g.sy, g.sx);
       await nextFrame();
-      await sleep(750);
+      await sleep(60);
       env.scrollTo(g.sy, g.sx);
       this.view.frozen = null;
     }
@@ -3653,7 +3699,7 @@
         this.unlockSound();
       }, true);
       // Universal instant audio unlock: micro-movements, touch, scroll, focus instantly resume audio
-      const unlockEvents = ["pointerdown", "pointermove", "touchstart", "touchend", "wheel", "scroll", "keydown", "focus"];
+      const unlockEvents = ["pointerdown", "touchstart", "keydown", "click"];
       for (const ev of unlockEvents) {
         on(window, ev, () => this.unlockSound(), { passive: true });
       }
@@ -3738,9 +3784,10 @@
     }
 
     updateHud() {
-      const E = this.engine;
       const v = this.view;
-      if (!E.ready) return;
+      if (!v || !v.hud || !v.status) return;
+      const E = this.engine;
+      if (!E || !E.ready) return;
       const workers = E.cursors.filter((c) => c.worked).length + E.retired;
       const total = E.tasks.length;
       const done = E.doneCount;
@@ -3769,9 +3816,9 @@
       const v = this.view;
       const workers = E.cursors.filter((c) => c.worked).length + E.retired;
       const secs = (E.endTime - E.startTime).toFixed(1);
-      v.status.innerHTML = `Rebuilt by <b>${workers}</b> agents in <b>${secs}s</b>`;
-      v.barFill.style.width = "100%";
-      v.dots.innerHTML = "";
+      if (v.status) v.status.innerHTML = `Rebuilt by <b>${workers}</b> agents in <b>${secs}s</b>`;
+      if (v.barFill) v.barFill.style.width = "100%";
+      if (v.dots) v.dots.innerHTML = "";
       v.root.querySelector('[data-a="live"]').hidden = false;
       v.root.querySelector('[data-a="replay"]').hidden = false;
       v.root.querySelector('[data-a="tour"]').hidden = true;
