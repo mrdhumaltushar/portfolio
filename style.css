@@ -86,20 +86,8 @@ body {
   z-index: 0;
 }
 
-/* Swarm Real-Element Blueprint Rebuild State */
+/* Clean Portfolio State: All elements fully rendered without delays */
 .swarm-target {
-  opacity: 0;
-  transform: translateY(18px) scale(0.985);
-  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
-}
-
-.swarm-target.swarm-building {
-  opacity: 0.5;
-  transform: translateY(6px) scale(0.995);
-}
-
-.swarm-target.swarm-built {
   opacity: 1 !important;
   transform: none !important;
 }
@@ -3772,4 +3760,155 @@ body {
   .bmw-project-metrics-grid {
     grid-template-columns: 1fr !important;
   }
+}
+
+/* ===================================================================
+   AUTONOMOUS SWARM ARCHITECTURE PROJECT & HERO INTERACTIVE BADGE
+   =================================================================== */
+
+.banner-swarm {
+  background: radial-gradient(circle at 60% 40%, rgba(14, 165, 233, 0.25) 0%, #030712 75%), linear-gradient(135deg, #0b1329 0%, #030712 100%);
+  border-right: 1px solid rgba(14, 165, 233, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.swarm-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(3, 7, 18, 0.85) !important;
+  border-color: rgba(56, 189, 248, 0.45) !important;
+  color: #38bdf8 !important;
+}
+
+.pulse-indicator {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 10px #38bdf8;
+  animation: pulseNeon 1.8s infinite;
+}
+
+@keyframes pulseNeon {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.85); }
+}
+
+.banner-swarm-visual {
+  position: relative;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.swarm-visual-center {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  border: 1.5px solid rgba(56, 189, 248, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 25px rgba(14, 165, 233, 0.35);
+  z-index: 2;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover .swarm-visual-center {
+  transform: scale(1.1);
+  box-shadow: 0 0 35px rgba(14, 165, 233, 0.6);
+}
+
+.swarm-monogram {
+  color: #38bdf8;
+  font-weight: 800;
+  font-size: 24px;
+  font-family: Inter, sans-serif;
+}
+
+.swarm-orbit-cursors {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.mini-agent {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid var(--c);
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  animation: floatMiniAgent 3.5s ease-in-out infinite alternate;
+}
+
+.mini-agent.agent-1 { top: 12px; left: 16%; animation-delay: 0s; }
+.mini-agent.agent-2 { top: 18px; right: 18%; animation-delay: -0.9s; }
+.mini-agent.agent-3 { bottom: 12px; left: 22%; animation-delay: -1.8s; }
+.mini-agent.agent-4 { bottom: 14px; right: 16%; animation-delay: -2.7s; }
+
+@keyframes floatMiniAgent {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(2deg); }
+  100% { transform: translateY(4px) rotate(-2deg); }
+}
+
+.highlight-cyan {
+  color: #38bdf8 !important;
+  font-weight: 700;
+}
+
+/* Hero Special Interactive Swarm Badge */
+.hero-special-badge-wrap {
+  margin-top: 1.1rem;
+}
+
+.hero-interactive-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: rgba(14, 165, 233, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: #f0f9ff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  transition: all 0.25s ease;
+}
+
+.hero-interactive-badge:hover {
+  background: rgba(14, 165, 233, 0.2);
+  border-color: #38bdf8;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(14, 165, 233, 0.3);
+  color: #ffffff;
+}
+
+.hero-interactive-badge .badge-spark {
+  font-size: 0.95rem;
+}
+
+.hero-interactive-badge .badge-arrow {
+  color: #38bdf8;
+  font-weight: 700;
+  transition: transform 0.2s ease;
+}
+
+.hero-interactive-badge:hover .badge-arrow {
+  transform: translateX(3px);
 }

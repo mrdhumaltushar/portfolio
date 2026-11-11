@@ -15,27 +15,10 @@
   
     <!-- Stylesheet -->
   <link rel="stylesheet" href="style.css">
-  <!-- Swarm Rebuild: Instant Dark Curtain - prevents initial flash of finished page -->
-  <style id="swarm-curtain-style">
-    #swarm-curtain {
-      position: fixed;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #030712;
-      background-image: 
-        radial-gradient(rgba(14, 165, 233, 0.15) 1px, transparent 1px),
-        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-      background-size: 32px 32px;
-      z-index: 2147483646;
-      pointer-events: none;
-    }
-  </style>
+  <!-- Clean Instant-Load Mode: Zero delay, zero loader curtain -->
 </head>
 <body>
-  <!-- Instant Swarm Curtain: Active immediately on page load/refresh -->
-  <div id="swarm-curtain"></div>
+
 
   <!-- Ambient Glow Background -->
   <div class="ambient-glow"></div>
@@ -198,6 +181,15 @@
 
             <a href="#contact" class="btn-secondary hero-btn-alt">
               <span>Contact Me</span>
+            </a>
+          </div>
+
+          <!-- Featured Innovation Link -->
+          <div class="hero-special-badge-wrap">
+            <a href="https://github.com/mrdhumaltushar/portfolio/tree/animated" target="_blank" rel="noopener" class="hero-interactive-badge" title="Launch the animated swarm edition with procedural music and multiplayer cursors">
+              <span class="badge-spark">✨</span>
+              <span class="badge-text">Interactive Swarm Edition 🔊</span>
+              <span class="badge-arrow">↗</span>
             </a>
           </div>
         </div>
@@ -585,9 +577,10 @@
         <!-- Filter Buttons -->
         <div class="project-filters">
           <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="corporate">Corporate &amp; Enterprise</button>
           <button class="filter-btn" data-filter="finance">Financial &amp; Sales</button>
-          <button class="filter-btn" data-filter="corporate">Corporate Dashboards</button>
           <button class="filter-btn" data-filter="analytics">Data Science &amp; AI</button>
+          <button class="filter-btn" data-filter="creative">Interactive &amp; Creative</button>
         </div>
 
         <div class="projects-grid">
@@ -626,6 +619,67 @@
               <div class="project-links">
                 <a href="#contact" class="proj-action primary">Discuss Solution</a>
                 <a href="https://github.com/mrdhumaltushar/portfolio/raw/main/Tushar_Dhumal_PowerBI_Developer.pdf" target="_blank" class="proj-action" download="Tushar_Dhumal_PowerBI_Developer.pdf">Resume Details</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project: Autonomous Swarm Agent Architecture & Procedural Audio -->
+          <div class="project-card" data-category="creative analytics">
+            <div class="project-banner banner-swarm">
+              <div class="project-badge swarm-badge">
+                <span class="pulse-indicator"></span> Autonomous Agents &bull; Web Audio Synth
+              </div>
+              <div class="banner-preview-content swarm-preview-content">
+                <div class="banner-kpi-bar">
+                  <div class="bk-item"><span class="b-lbl">Swarm Agents</span><span class="b-val highlight-cyan">10 Cursors</span></div>
+                  <div class="bk-item"><span class="b-lbl">Frame Rate</span><span class="b-val success">60 FPS Locked</span></div>
+                  <div class="bk-item"><span class="b-lbl">Audio Core</span><span class="b-val">Procedural</span></div>
+                </div>
+                <div class="banner-swarm-visual">
+                  <div class="swarm-visual-center">
+                    <span class="swarm-monogram">T</span>
+                  </div>
+                  <div class="swarm-orbit-cursors">
+                    <span class="mini-agent agent-1" style="--c: #0d99ff">
+                      <svg viewBox="0 0 24 24" width="12" height="12" fill="#0d99ff"><path d="M4 3L18 10L11 12.5L8.5 19.5L4 3Z"/></svg>
+                      <i>Alex</i>
+                    </span>
+                    <span class="mini-agent agent-2" style="--c: #f43f5e">
+                      <svg viewBox="0 0 24 24" width="12" height="12" fill="#f43f5e"><path d="M4 3L18 10L11 12.5L8.5 19.5L4 3Z"/></svg>
+                      <i>Sarah</i>
+                    </span>
+                    <span class="mini-agent agent-3" style="--c: #10b981">
+                      <svg viewBox="0 0 24 24" width="12" height="12" fill="#10b981"><path d="M4 3L18 10L11 12.5L8.5 19.5L4 3Z"/></svg>
+                      <i>Leo</i>
+                    </span>
+                    <span class="mini-agent agent-4" style="--c: #a855f7">
+                      <svg viewBox="0 0 24 24" width="12" height="12" fill="#a855f7"><path d="M4 3L18 10L11 12.5L8.5 19.5L4 3Z"/></svg>
+                      <i>Maya</i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="project-overlay">
+                <a href="https://github.com/mrdhumaltushar/portfolio/tree/animated" target="_blank" rel="noopener" class="view-link">Launch Interactive Swarm 🔊 &rarr;</a>
+              </div>
+            </div>
+            <div class="project-body">
+              <div class="project-tags">
+                <span>Multiplayer Swarm</span>
+                <span>Web Audio API</span>
+                <span>Boids Physics</span>
+                <span>Shadow DOM</span>
+                <span>Spatial Culling</span>
+              </div>
+              <h3 class="project-title">Autonomous Swarm Architecture &amp; Procedural Audio Portfolio</h3>
+              <p class="project-summary">Architected a creative web showcase featuring an autonomous 10-agent multiplayer cursor swarm that collaboratively drafts and reconstructs the portfolio live in real time. Implemented with mathematical Boids flocking physics, sub-frame spatial GPU culling, and a procedural synthesizer/Web Audio piano engine synchronized with DOM interactions.</p>
+              <div class="project-links">
+                <a href="https://github.com/mrdhumaltushar/portfolio/tree/animated" target="_blank" rel="noopener" class="proj-action primary">
+                  <span>Explore Swarm 🔊</span>
+                </a>
+                <a href="https://github.com/mrdhumaltushar/portfolio-animated" target="_blank" rel="noopener" class="proj-action">
+                  <span>GitHub Source ↗</span>
+                </a>
               </div>
             </div>
           </div>
@@ -1228,7 +1282,6 @@
   <!-- Main Portfolio Scripts -->
   <script src="script.js"></script>
 
-  <!-- Swarm Rebuild: Multiplayer Cursor Architecture Engine (Autostarts on Load/Refresh) -->
-  <script src="swarm-rebuild.js" defer></script>
+  <!-- Swarm Architecture available in dedicated repo: mrdhumaltushar/portfolio-animated -->
 </body>
 </html>
