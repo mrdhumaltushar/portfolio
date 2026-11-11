@@ -3,13 +3,13 @@
    Design Replica & Enhancement inspired by Reference Portfolio
    =================================================================== */
 
-/* CSS Reset & Variables - BMW M Motorsport Theme */
+/* CSS Reset & Variables - Automotive M Motorsport Theme */
 :root {
   --bg-dark: #07080c;
   --bg-card: #0c0f17;
   --bg-card-hover: #121824;
 
-  /* BMW M Tri-Color Palette */
+  /* Automotive M Tri-Color Palette */
   --m-light-blue: #0e72bb;
   --m-dark-blue: #003b79;
   --m-red: #e22718;
@@ -2622,8 +2622,8 @@ body {
 }
 
 
-/* BMW M Project Badge & Tricolor Elements */
-.project-badge.bmw-m-badge {
+/* Automotive M Project Badge & Tricolor Elements */
+.project-badge.automotive-m-badge {
   background: linear-gradient(90deg, #0e72bb 0%, #003b79 50%, #e22718 100%) !important;
   color: #ffffff !important;
   font-weight: 800;
@@ -2761,7 +2761,7 @@ body {
   background: var(--m-light-blue);
 }
 
-.bi-cockpit-card.highlight-bmw::before {
+.bi-cockpit-card.highlight-automotive::before {
   background: linear-gradient(180deg, #0e72bb 0%, #003b79 50%, #e22718 100%);
 }
 
@@ -2892,7 +2892,7 @@ body {
   animation: pulseDot 2s infinite;
 }
 
-.bmw-tag {
+.automotive-tag {
   font-size: 0.7rem;
   font-weight: 700;
   color: var(--m-light-blue);
@@ -2936,17 +2936,17 @@ body {
 }
 
 /* ==========================================================================
-   BMW M-PERFORMANCE INTERACTIVE DASHBOARD CAROUSEL & FULLSCREEN LIGHTBOX
+   Automotive M-PERFORMANCE INTERACTIVE DASHBOARD CAROUSEL & FULLSCREEN LIGHTBOX
    ========================================================================== */
 
-/* BMW Project Card Enhancements */
-.project-card.bmw-featured-project {
+/* Automotive Project Card Enhancements */
+.project-card.automotive-featured-project {
   position: relative;
   border-color: rgba(14, 114, 187, 0.4);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
 }
 
-.project-card.bmw-featured-project:hover {
+.project-card.automotive-featured-project:hover {
   border-color: rgba(56, 189, 248, 0.6);
   box-shadow: 0 20px 50px rgba(14, 114, 187, 0.25);
 }
@@ -3042,7 +3042,7 @@ body {
   pointer-events: auto;
 }
 
-.bmw-badge-m-stripes {
+.automotive-badge-m-stripes {
   display: inline-block;
   width: 14px;
   height: 9px;
@@ -3163,7 +3163,7 @@ body {
 }
 
 /* Quick Metrics Bar inside Project Card Body */
-.bmw-project-metrics-grid {
+.automotive-project-metrics-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.5rem;
@@ -3195,7 +3195,7 @@ body {
   line-height: 1.2;
 }
 
-.open-bmw-lightbox-cta {
+.open-automotive-lightbox-cta {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -3205,7 +3205,7 @@ body {
 /* ==========================================================================
    FULLSCREEN LIGHTBOX MODAL COMPONENT
    ========================================================================== */
-.bmw-lightbox-modal {
+.automotive-lightbox-modal {
   position: fixed;
   inset: 0;
   z-index: 100000;
@@ -3217,12 +3217,12 @@ body {
   transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.bmw-lightbox-modal.active {
+.automotive-lightbox-modal.active {
   opacity: 1;
   pointer-events: auto;
 }
 
-.bmw-lightbox-backdrop {
+.automotive-lightbox-backdrop {
   position: absolute;
   inset: 0;
   background: rgba(3, 7, 14, 0.92);
@@ -3231,7 +3231,7 @@ body {
   cursor: pointer;
 }
 
-.bmw-lightbox-dialog {
+.automotive-lightbox-dialog {
   position: relative;
   width: 95vw;
   max-width: 1440px;
@@ -3245,10 +3245,10 @@ body {
   flex-direction: column;
   overflow: hidden;
   z-index: 2;
-  animation: bmwModalIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: automotiveModalIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes bmwModalIn {
+@keyframes automotiveModalIn {
   from {
     opacity: 0;
     transform: scale(0.96) translateY(12px);
@@ -3260,7 +3260,7 @@ body {
 }
 
 /* Modal Header */
-.bmw-lightbox-header {
+.automotive-lightbox-header {
   padding: 0.85rem 1.4rem;
   background: rgba(10, 20, 36, 0.75);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -3270,13 +3270,13 @@ body {
   flex-shrink: 0;
 }
 
-.bmw-modal-title-group {
+.automotive-modal-title-group {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.bmw-m-tricolor-line {
+.automotive-m-tricolor-line {
   width: 4px;
   height: 38px;
   border-radius: 2px;
@@ -3284,7 +3284,7 @@ body {
   flex-shrink: 0;
 }
 
-.bmw-modal-kicker {
+.automotive-modal-kicker {
   font-size: 0.65rem;
   font-weight: 800;
   letter-spacing: 0.12em;
@@ -3292,7 +3292,7 @@ body {
   margin-bottom: 2px;
 }
 
-.bmw-modal-title {
+.automotive-modal-title {
   font-size: 1.15rem;
   font-weight: 800;
   color: #ffffff;
@@ -3300,13 +3300,13 @@ body {
   letter-spacing: -0.01em;
 }
 
-.bmw-modal-header-actions {
+.automotive-modal-header-actions {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.bmw-modal-counter {
+.automotive-modal-counter {
   font-size: 0.78rem;
   font-weight: 700;
   color: #94a3b8;
@@ -3316,7 +3316,7 @@ body {
   border-radius: 999px;
 }
 
-.bmw-modal-icon-btn {
+.automotive-modal-icon-btn {
   width: 36px;
   height: 36px;
   border-radius: 10px;
@@ -3331,21 +3331,21 @@ body {
   padding: 0;
 }
 
-.bmw-modal-icon-btn:hover {
+.automotive-modal-icon-btn:hover {
   background: rgba(14, 165, 233, 0.2);
   border-color: #38bdf8;
   color: #ffffff;
   transform: translateY(-1px);
 }
 
-.bmw-modal-icon-btn.bmw-modal-close:hover {
+.automotive-modal-icon-btn.automotive-modal-close:hover {
   background: rgba(226, 39, 24, 0.25);
   border-color: #e22718;
   color: #ffffff;
 }
 
 /* Modal Stage Viewer */
-.bmw-lightbox-stage {
+.automotive-lightbox-stage {
   position: relative;
   flex: 1;
   display: flex;
@@ -3356,7 +3356,7 @@ body {
   overflow: hidden;
 }
 
-.bmw-stage-image-container {
+.automotive-stage-image-container {
   position: relative;
   max-width: 100%;
   max-height: 100%;
@@ -3365,7 +3365,7 @@ body {
   justify-content: center;
 }
 
-.bmw-stage-image-container img {
+.automotive-stage-image-container img {
   max-width: 100%;
   max-height: calc(92vh - 210px);
   width: auto;
@@ -3377,7 +3377,7 @@ body {
   user-select: none;
 }
 
-.bmw-fullscreen-zoom-badge {
+.automotive-fullscreen-zoom-badge {
   position: absolute;
   bottom: 12px;
   right: 14px;
@@ -3395,7 +3395,7 @@ body {
   gap: 5px;
 }
 
-.bmw-stage-nav-arrow {
+.automotive-stage-nav-arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -3416,15 +3416,15 @@ body {
   padding: 0;
 }
 
-.bmw-stage-nav-arrow.prev {
+.automotive-stage-nav-arrow.prev {
   left: 14px;
 }
 
-.bmw-stage-nav-arrow.next {
+.automotive-stage-nav-arrow.next {
   right: 14px;
 }
 
-.bmw-stage-nav-arrow:hover {
+.automotive-stage-nav-arrow:hover {
   background: #0284c7;
   border-color: #38bdf8;
   color: #fff;
@@ -3433,7 +3433,7 @@ body {
 }
 
 /* Modal Footer */
-.bmw-lightbox-footer {
+.automotive-lightbox-footer {
   padding: 0.75rem 1.4rem 0.9rem;
   background: rgba(10, 20, 36, 0.8);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -3444,7 +3444,7 @@ body {
   flex-shrink: 0;
 }
 
-.bmw-modal-caption-kpis {
+.automotive-modal-caption-kpis {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -3478,14 +3478,14 @@ body {
 }
 
 /* Modal Thumbnails Strip */
-.bmw-modal-thumb-strip {
+.automotive-modal-thumb-strip {
   display: flex;
   align-items: center;
   gap: 8px;
   flex-shrink: 0;
 }
 
-.bmw-thumb-card {
+.automotive-thumb-card {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -3519,42 +3519,42 @@ body {
   transition: color 0.2s ease;
 }
 
-.bmw-thumb-card:hover .thumb-img-wrapper {
+.automotive-thumb-card:hover .thumb-img-wrapper {
   border-color: #38bdf8;
   transform: translateY(-2px);
 }
 
-.bmw-thumb-card.active .thumb-img-wrapper {
+.automotive-thumb-card.active .thumb-img-wrapper {
   border-color: #38bdf8;
   box-shadow: 0 0 12px rgba(56, 189, 248, 0.55);
   transform: translateY(-2px);
 }
 
-.bmw-thumb-card.active .thumb-label {
+.automotive-thumb-card.active .thumb-label {
   color: #38bdf8;
 }
 
 /* Lightbox Responsive Rules */
 @media (max-width: 900px) {
-  .bmw-lightbox-dialog {
+  .automotive-lightbox-dialog {
     width: 98vw;
     height: 96vh;
     border-radius: 12px;
   }
-  .bmw-modal-caption-kpis {
+  .automotive-modal-caption-kpis {
     display: none;
   }
-  .bmw-modal-thumb-strip {
+  .automotive-modal-thumb-strip {
     width: 100%;
     justify-content: center;
   }
-  .bmw-stage-image-container img {
+  .automotive-stage-image-container img {
     max-height: calc(96vh - 160px);
   }
 }
 
 @media (max-width: 640px) {
-  .bmw-project-metrics-grid {
+  .automotive-project-metrics-grid {
     grid-template-columns: 1fr;
     gap: 0.35rem;
   }
@@ -3562,7 +3562,7 @@ body {
     width: 28px;
     height: 28px;
   }
-  .bmw-stage-nav-arrow {
+  .automotive-stage-nav-arrow {
     width: 36px;
     height: 36px;
   }
@@ -3769,7 +3769,7 @@ body {
     max-height: 290px !important;
   }
 
-  .bmw-project-metrics-grid {
+  .automotive-project-metrics-grid {
     grid-template-columns: 1fr !important;
   }
 }

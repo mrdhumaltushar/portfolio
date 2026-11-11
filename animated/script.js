@@ -208,15 +208,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   // ==========================================================================
-  // 9. BMW M-Performance Interactive Carousel & Fullscreen Lightbox
+  // 9. Automotive M-Performance Interactive Carousel & Fullscreen Lightbox
   // ==========================================================================
-  (function initBmwShowcase() {
+  (function initFleetShowcase() {
     // Dashboard Data Specifications
-    const bmwPages = [
+    const automotivePages = [
       {
         title: "Page 1: Macro Executive Overview",
         subtitle: "Global Fleet Performance & Dynamic YoY Growth Cockpit",
-        src: "bmw-dashboard/bmw-overview.png",
+        src: "fleet-dashboard/fleet-overview.png",
         kpis: [
           { k: "Global Revenue", v: "$19.0T" },
           { k: "Fleet Units", v: "253M" },
@@ -228,7 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
       {
         title: "Page 2: Product & Vehicle Strategy",
         subtitle: "Pricing Elasticity, Powertrain Penetration & Mileage Dynamics",
-        src: "bmw-dashboard/bmw-strategy.png",
+        src: "fleet-dashboard/fleet-strategy.png",
         kpis: [
           { k: "Avg Selling Price", v: "$75.03K" },
           { k: "Eco-Friendly Share", v: "50.00%", success: true },
@@ -240,7 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
       {
         title: "Page 3: Regional & Customer Segmentation",
         subtitle: "Dynamic DAX Waterfall Revenue Variance & Geographic Decomposition",
-        src: "bmw-dashboard/bmw-regional.png",
+        src: "fleet-dashboard/fleet-regional.png",
         kpis: [
           { k: "Waterfall Variance", v: "Asia $3.25T • EU $3.19T • NA $3.18T" },
           { k: "High-Value %", v: "0.51% Elite Tier" },
@@ -251,7 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
       {
         title: "Technical Architecture: Power BI Desktop Model",
         subtitle: "Star Schema Data Modeling & DAX Calculation Engine",
-        src: "bmw-dashboard/bmw-desktop.png",
+        src: "fleet-dashboard/fleet-desktop.png",
         kpis: [
           { k: "Data Architecture", v: "High-Performance Star Schema" },
           { k: "DAX Measures", v: "YoY Variance, PY Revenue, Dynamic %, Time-Intell" },
@@ -262,27 +262,27 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     // Card Carousel Elements
-    const cardCarousel = document.getElementById("bmwCardCarousel");
-    const slides = document.querySelectorAll("#bmwCardSlides .carousel-slide");
-    const dots = document.querySelectorAll("#bmwCardDots .carousel-dot");
-    const prevBtn = document.getElementById("bmwSlidePrev");
-    const nextBtn = document.getElementById("bmwSlideNext");
-    const indicatorText = document.getElementById("bmwIndicatorText");
-    const expandTriggerBtn = document.getElementById("expandBmwLightboxBtn");
-    const openModalBtn = document.getElementById("openBmwModalFromBtn");
+    const cardCarousel = document.getElementById("automotiveCardCarousel");
+    const slides = document.querySelectorAll("#automotiveCardSlides .carousel-slide");
+    const dots = document.querySelectorAll("#automotiveCardDots .carousel-dot");
+    const prevBtn = document.getElementById("automotiveSlidePrev");
+    const nextBtn = document.getElementById("automotiveSlideNext");
+    const indicatorText = document.getElementById("automotiveIndicatorText");
+    const expandTriggerBtn = document.getElementById("expandFleetLightboxBtn");
+    const openModalBtn = document.getElementById("openFleetModalFromBtn");
 
     // Modal Elements
-    const modal = document.getElementById("bmwLightboxModal");
-    const modalBackdrop = document.getElementById("bmwLightboxBackdrop");
-    const modalHeading = document.getElementById("bmwModalHeading");
-    const modalCounter = document.getElementById("bmwModalCounter");
-    const modalMainImg = document.getElementById("bmwModalMainImg");
-    const modalPrev = document.getElementById("bmwModalPrev");
-    const modalNext = document.getElementById("bmwModalNext");
-    const modalCloseBtn = document.getElementById("bmwModalCloseBtn");
-    const modalFullscreenBtn = document.getElementById("bmwModalFullscreenBtn");
-    const modalKpis = document.getElementById("bmwModalKpis");
-    const modalThumbs = document.querySelectorAll("#bmwModalThumbStrip .bmw-thumb-card");
+    const modal = document.getElementById("automotiveLightboxModal");
+    const modalBackdrop = document.getElementById("automotiveLightboxBackdrop");
+    const modalHeading = document.getElementById("automotiveModalHeading");
+    const modalCounter = document.getElementById("automotiveModalCounter");
+    const modalMainImg = document.getElementById("automotiveModalMainImg");
+    const modalPrev = document.getElementById("automotiveModalPrev");
+    const modalNext = document.getElementById("automotiveModalNext");
+    const modalCloseBtn = document.getElementById("automotiveModalCloseBtn");
+    const modalFullscreenBtn = document.getElementById("automotiveModalFullscreenBtn");
+    const modalKpis = document.getElementById("automotiveModalKpis");
+    const modalThumbs = document.querySelectorAll("#automotiveModalThumbStrip .automotive-thumb-card");
 
     let currentCardIndex = 0;
     let currentModalIndex = 0;
@@ -301,8 +301,8 @@ document.addEventListener('DOMContentLoaded', () => {
         dot.classList.toggle("active", i === currentCardIndex);
       });
 
-      if (indicatorText && bmwPages[currentCardIndex]) {
-        const shortTitle = bmwPages[currentCardIndex].title.replace("Page ", "P").split(":")[1] || bmwPages[currentCardIndex].title;
+      if (indicatorText && automotivePages[currentCardIndex]) {
+        const shortTitle = automotivePages[currentCardIndex].title.replace("Page ", "P").split(":")[1] || automotivePages[currentCardIndex].title;
         indicatorText.textContent = `${currentCardIndex + 1} / ${slides.length} • ${shortTitle.trim()}`;
       }
     }
@@ -369,12 +369,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Modal Display Function
     function setModalSlide(index) {
-      if (!modal || !bmwPages.length) return;
-      currentModalIndex = (index + bmwPages.length) % bmwPages.length;
-      const data = bmwPages[currentModalIndex];
+      if (!modal || !automotivePages.length) return;
+      currentModalIndex = (index + automotivePages.length) % automotivePages.length;
+      const data = automotivePages[currentModalIndex];
 
       if (modalHeading) modalHeading.textContent = data.title;
-      if (modalCounter) modalCounter.textContent = `${currentModalIndex + 1} / ${bmwPages.length}`;
+      if (modalCounter) modalCounter.textContent = `${currentModalIndex + 1} / ${automotivePages.length}`;
       if (modalMainImg) {
         modalMainImg.src = data.src;
         modalMainImg.alt = data.title;

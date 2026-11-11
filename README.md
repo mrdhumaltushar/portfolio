@@ -1,7 +1,7 @@
 # Tushar Dhumal | Executive Portfolio
 
 > **Microsoft PL-300 Certified Power BI Developer & Data Analyst**  
-> Dynamic, Awwwards-inspired portfolio built with modern HTML5, CSS3, JavaScript, SVG graphics, and the iconic BMW M Motorsport design system.
+> Dynamic, Awwwards-inspired portfolio built with modern HTML5, CSS3, JavaScript, SVG graphics, and the iconic Automotive M Motorsport design system.
 
 ---
 
@@ -21,7 +21,7 @@
 ## 📁 Repository Structure
 ```
 ├── index.html                  # Main responsive single-page application
-├── style.css                   # BMW M Motorsport design tokens & styles
+├── style.css                   # Automotive M Motorsport design tokens & styles
 ├── script.js                   # Interactive filters, live clock & animations
 ├── user_cutout_clean.png       # Optimized transparent executive portrait
 ├── Tushar_Dhumal_PowerBI_Developer.pdf    # Downloadable resume PDF
